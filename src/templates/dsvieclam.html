@@ -11,9 +11,9 @@
 
 <body class="bg-[#f6fbff] text-[#222] font-sans">
   <!-- Navbar -->
-   <nav class="flex items-center justify-between px-10 py-4 bg-white shadow-sm">
-  <div class="text-2xl font-bold text-[#1d7ed6]">inMentor</div> <!-- Tăng kích thước chữ -->
-  <ul class="flex space-x-4 font-medium text-lg"> <!-- Tăng kích thước chữ và giảm khoảng cách -->
+   <nav class="flex items-center justify-between max-w-8xl mx-auto px-6 py-6 bg-white shadow-sm">
+  <div class="text-4xl font-bold text-[#1d7ed6] mr-8">inMentor</div> <!-- Tăng kích thước chữ -->
+  <ul class="flex space-x-6 font-medium text-xl"> <!-- Tăng kích thước chữ và giảm khoảng cách -->
     <li><a href="#" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
     <li><a href="#" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
     <li><a href="#" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
@@ -111,19 +111,22 @@
       filteredJobs.forEach((job) => {
         const card = document.createElement("div");
         card.className =
-          "bg-white p-6 rounded-xl shadow-md flex flex-col justify-between";
+          "bg-white p-6 rounded-xl shadow-md flex flex-col justify-between " +
+          "hover:shadow-xl hover:-translate-y-1 hover:bg-gray-50 transition transform duration-300";
         card.innerHTML = `
           <h2 class="text-[#1d7ed6] font-semibold text-lg mb-1">${job.title}</h2>
           <p class="text-sm text-[#1d7ed6] font-medium mb-2">${job.salary}</p>
           <p class="text-sm text-gray-700 flex items-center gap-1 mb-1">
-            <i class="ri-building-line"></i>${job.company}
+             <i class="ri-building-line"></i>${job.company}
           </p>
           <p class="text-sm text-gray-700 flex items-center gap-1 mb-4">
-            <i class="ri-map-pin-line"></i>${job.location}
+             <i class="ri-map-pin-line"></i>${job.location}
           </p>
           <div class="flex gap-2">
-            <button class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm">Chi tiết</button>
-            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm">Phỏng vấn ảo</button>
+            <button class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm
+              hover:bg-[#1666c1] hover:shadow-lg transition duration-300 ease-in-out">Chi tiết</button>
+            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm
+              hover:bg-gray-700 hover:shadow-lg transition duration-300 ease-in-out">Phỏng vấn ảo</button>
           </div>
         `;
         jobList.appendChild(card);
