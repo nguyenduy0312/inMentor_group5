@@ -2,7 +2,7 @@ import os
 import httpx
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path="key.env")
+load_dotenv(dotenv_path="../../Backend/.env")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 MODEL = "llama3-8b-8192"
@@ -28,7 +28,7 @@ async def call_groq(messages):
 
 async def generate_question(topic: str) -> str:
     messages = [
-        {"role": "user", "content": f"Hãy đặt một câu hỏi phỏng vấn kỹ thuật về chủ đề {topic}."}
+        {"role": "user", "content": f"Hãy đặt một câu hỏi bằng tiếng việt phỏng vấn kỹ thuật về chủ đề {topic}."}
     ]
     return await call_groq(messages)
 
@@ -37,6 +37,6 @@ async def evaluate_answer(question: str, answer: str) -> str:
         {"role": "user", "content": f"""Bạn là nhà tuyển dụng.  
 Câu hỏi: "{question}"  
 Câu trả lời của ứng viên: "{answer}"  
-Hãy đánh giá ngắn gọn câu trả lời và cho điểm từ 1 đến 10."""}
+Hãy đánh giá câu trả lời bằng tiếng việt."""}
     ]
     return await call_groq(messages)
