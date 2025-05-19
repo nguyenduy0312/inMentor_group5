@@ -81,146 +81,82 @@
       display: none;
     }
 
-    .social-buttons {
-      margin: 1em 0;
-    }
-
-    .social-buttons button {
-      width: 100%;
-      padding: 0.7em;
-      margin-bottom: 0.5em;
-      border: none;
+    .flash-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 1em;
       border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .google-btn { background: #dd4b39; color: white; }
-    .facebook-btn { background: #3b5998; color: white; }
-    .github-btn { background: #24292e; color: white; }
-
-    .social-buttons button:hover {
-      opacity: 0.9;
+      margin-bottom: 1em;
+      border: 1px solid #f5c6cb;
     }
   </style>
 </head>
 <body>
   <div class="container" id="formContainer">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-message">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <!-- Login Form -->
-    <form id="loginForm">
+    <form method="POST" action="/login">
       <h2>Đăng nhập</h2>
       <div class="input-group">
         <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" required />
+        <input type="email" name="email" id="loginEmail" required />
       </div>
       <div class="input-group">
         <label for="loginPassword">Mật khẩu</label>
-        <input type="password" id="loginPassword" required />
+        <input type="password" name="password" id="loginPassword" required />
       </div>
       <button class="btn" type="submit">Đăng nhập</button>
-
-      <div class="social-buttons">
-        <button type="button" class="google-btn">Đăng nhập với Google</button>
-        <button type="button" class="facebook-btn">Đăng nhập với Facebook</button>
-        <button type="button" class="github-btn">Đăng nhập với GitHub</button>
-      </div>
-
       <div class="toggle">
-        Chưa có tài khoản? <a id="showSignUp">Đăng ký</a>
+        Chưa có tài khoản? <a href="/signup">Đăng ký</a>
       </div>
     </form>
 
     <!-- Sign Up Form -->
-    <form id="signupForm" class="hidden">
+    <form method="POST" action="/signup" class="hidden" id="signupForm">
       <h2>Đăng ký</h2>
       <div class="input-group">
         <label for="signupName">Họ tên</label>
-        <input type="text" id="signupName" required />
+        <input type="text" name="name" id="signupName" required />
       </div>
       <div class="input-group">
         <label for="signupEmail">Email</label>
-        <input type="email" id="signupEmail" required />
+        <input type="email" name="email" id="signupEmail" required />
       </div>
       <div class="input-group">
         <label for="signupPassword">Mật khẩu</label>
-        <input type="password" id="signupPassword" required />
+        <input type="password" name="password" id="signupPassword" required />
       </div>
       <div class="input-group">
         <label for="confirmPassword">Xác nhận mật khẩu</label>
         <input type="password" id="confirmPassword" required />
       </div>
       <button class="btn" type="submit">Đăng ký</button>
-
-      <div class="social-buttons">
-        <button type="button" class="google-btn">Đăng ký với Google</button>
-        <button type="button" class="facebook-btn">Đăng ký với Facebook</button>
-        <button type="button" class="github-btn">Đăng ký với GitHub</button>
-      </div>
-
       <div class="toggle">
-        Đã có tài khoản? <a id="showLogin">Đăng nhập</a>
+        Đã có tài khoản? <a href="/login">Đăng nhập</a>
       </div>
     </form>
   </div>
 
   <script>
-    const loginForm = document.getElementById("loginForm");
     const signupForm = document.getElementById("signupForm");
-    const showSignUp = document.getElementById("showSignUp");
-    const showLogin = document.getElementById("showLogin");
-
-    showSignUp.addEventListener("click", () => {
-      loginForm.classList.add("hidden");
-      signupForm.classList.remove("hidden");
-    });
-
-    showLogin.addEventListener("click", () => {
-      signupForm.classList.add("hidden");
-      loginForm.classList.remove("hidden");
-    });
-
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-      alert(`Đăng nhập:\nEmail: ${email}`);
-    });
+    const confirmPassword = document.getElementById("confirmPassword");
+    const signupPassword = document.getElementById("signupPassword");
 
     signupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("signupName").value;
-      const email = document.getElementById("signupEmail").value;
-      const password = document.getElementById("signupPassword").value;
-      const confirm = document.getElementById("confirmPassword").value;
-
-      if (password !== confirm) {
+      if (confirmPassword.value !== signupPassword.value) {
+        e.preventDefault();
         alert("Mật khẩu không khớp!");
-        return;
       }
-
-      alert(`Đăng ký:\nTên: ${name}\nEmail: ${email}`);
-    });
-
-    // Social login buttons
-    document.querySelectorAll(".google-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        alert("Chức năng đăng nhập bằng Google sẽ được tích hợp sau.");
-      });
-    });
-
-    document.querySelectorAll(".facebook-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        alert("Chức năng đăng nhập bằng Facebook sẽ được tích hợp sau.");
-      });
-    });
-
-    document.querySelectorAll(".github-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        alert("Chức năng đăng nhập bằng GitHub sẽ được tích hợp sau.");
-      });
     });
   </script>
 </body>
