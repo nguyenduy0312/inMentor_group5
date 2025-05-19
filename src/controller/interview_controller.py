@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from schemas import AnswerInput
-from ai_interviews import generate_question, evaluate_answer
+from src.model.schemas import AnswerInput
+from src.services.ai_service import generate_question, evaluate_answer
 
 router = APIRouter()
 
