@@ -1,23 +1,34 @@
-# dao/bao_cao_danh_gia_dao.py
-from model.bao_cao_danh_gia import BaoCaoDanhGia
+import mysql.connector
+from DataBase.connectdb import create_connection
 
-class BaoCaoDanhGiaDAO:
-    def __init__(self, connection):
-        self.conn = connection
+# Thêm báo cáo đánh giá mới
+def create_report(ma_phien, diem_tong, nhan_xet, diem_manh, diem_yeu, goi_y_cai_thien):
+    conn = create_connection()
+    cursor = conn.cursor()
 
-    def insert(self, bao_cao: BaoCaoDanhGia):
-        cursor = self.conn.cursor()
-        sql = """INSERT INTO bao_cao_danh_gia(Tong_Quan, Diem_Manh, Diem_Yeu, 
-                 Goi_Y_Cai_Thien, Ngay_Tao)
-                 VALUES (%s,%s,%s,%s,%s)"""
-        cursor.execute(sql, (bao_cao.Tong_Quan, bao_cao.Diem_Manh,
-                             bao_cao.Diem_Yeu, bao_cao.Goi_Y_Cai_Thien,
-                             bao_cao.Ngay_Tao))
-        self.conn.commit()
-        return cursor.lastrowid
+    sql = """
+        INSERT INTO Bao_Cao_Danh_Gia (
+            Ma_Phien, Diem_Tong, Nhan_Xet, Diem_Manh, Diem_Yeu, Goi_Y_Cai_Thien
+        ) VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    cursor.execute(sql, (ma_phien, diem_tong, nhan_xet, diem_manh, diem_yeu, goi_y_cai_thien))
+    conn.commit()
+    ma_bao_cao = cursor.lastrowid
 
-    def get_by_id(self, ma_bao_cao):
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM bao_cao_danh_gia WHERE Ma_Bao_Cao = %s", (ma_bao_cao,))
-        row = cursor.fetchone()
-        return BaoCaoDanhGia(*row) if row else None
+    cursor.close()
+    conn.close()
+    return ma_bao_cao
+
+
+# Lấy báo cáo theo mã phiên
+def get_report_by_session(ma_phien):
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    sql = "SELECT * FROM Bao_Cao_Danh_Gia WHERE Ma_Phien = %s"
+    cursor.execute(sql, (ma_phien,))
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+    return result
