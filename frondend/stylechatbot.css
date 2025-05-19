@@ -8,23 +8,24 @@ body {
 }
 
 .header-bar {
-  .logo-text {
-  font-size: 35px;
-  font-weight: bold;
-  color: #2b63d9; /* Màu xanh dương inMentor */
-  font-family: 'Segoe UI', sans-serif;
-  margin-left: 20px;
-}
-
-.logo-text span {
-  color: #2b63d9;
-}
-
+  display: flex;
+  align-items: center;
+  padding: 16px 45px;
 }
 
 .logo {
   height: 30px;
-  margin-left: 20px;
+  margin-right: 12px;
+}
+
+.logo-text {
+  font-size: 35px;
+  font-weight: bold;
+  color: #2b63d9;
+}
+
+.logo-text span {
+  color: #2b63d9;
 }
 
 /* Chat layout */
@@ -32,12 +33,14 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 70%;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .chat-box {
   flex: 1;
-  padding: 24px;
+  padding: 24px 32px;
   overflow-y: auto;
 }
 
@@ -58,9 +61,9 @@ body {
 .message {
   margin-bottom: 14px;
   line-height: 1.6;
-  padding: 10px 16px;
-  border-radius: 8px;
-  max-width: 500px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  max-width: 75%;
   word-wrap: break-word;
   white-space: pre-wrap;
 }
@@ -86,9 +89,10 @@ form {
   padding: 12px 24px;
   border-top: 1px solid #ddd;
   background-color: #fff;
-  max-width: 800px;
-  margin: 0 auto; /* căn giữa form */
+  max-width: 900px;
   width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 input[type="text"] {
@@ -103,7 +107,7 @@ input[type="text"] {
 button {
   padding: 12px 24px;
   font-size: 15px;
-  background-color: #666;
+  background-color: #2b63d9;
   color: white;
   border: none;
   border-radius: 6px;

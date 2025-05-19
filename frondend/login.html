@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 360px;
+      transition: 0.3s;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 1em;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 0.3em;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.9em;
+      border: none;
+      background: #217093;
+      color: white;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5em;
+    }
+
+    .btn:hover {
+      background: #195f7c;
+    }
+
+    .toggle {
+      margin-top: 1em;
+      text-align: center;
+      color: #666;
+    }
+
+    .toggle a {
+      color: #217093;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .social-buttons {
+      margin: 1em 0;
+    }
+
+    .social-buttons button {
+      width: 100%;
+      padding: 0.7em;
+      margin-bottom: 0.5em;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .google-btn { background: #dd4b39; color: white; }
+    .facebook-btn { background: #3b5998; color: white; }
+    .github-btn { background: #24292e; color: white; }
+
+    .social-buttons button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <!-- Login Form -->
+    <form id="loginForm">
+      <h2>Đăng nhập</h2>
+      <div class="input-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required />
+      </div>
+      <div class="input-group">
+        <label for="loginPassword">Mật khẩu</label>
+        <input type="password" id="loginPassword" required />
+      </div>
+      <button class="btn" type="submit">Đăng nhập</button>
+
+      <div class="social-buttons">
+        <button type="button" class="google-btn">Đăng nhập với Google</button>
+        <button type="button" class="facebook-btn">Đăng nhập với Facebook</button>
+        <button type="button" class="github-btn">Đăng nhập với GitHub</button>
+      </div>
+
+      <div class="toggle">
+        Chưa có tài khoản? <a id="showSignUp">Đăng ký</a>
+      </div>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm" class="hidden">
+      <h2>Đăng ký</h2>
+      <div class="input-group">
+        <label for="signupName">Họ tên</label>
+        <input type="text" id="signupName" required />
+      </div>
+      <div class="input-group">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" required />
+      </div>
+      <div class="input-group">
+        <label for="signupPassword">Mật khẩu</label>
+        <input type="password" id="signupPassword" required />
+      </div>
+      <div class="input-group">
+        <label for="confirmPassword">Xác nhận mật khẩu</label>
+        <input type="password" id="confirmPassword" required />
+      </div>
+      <button class="btn" type="submit">Đăng ký</button>
+
+      <div class="social-buttons">
+        <button type="button" class="google-btn">Đăng ký với Google</button>
+        <button type="button" class="facebook-btn">Đăng ký với Facebook</button>
+        <button type="button" class="github-btn">Đăng ký với GitHub</button>
+      </div>
+
+      <div class="toggle">
+        Đã có tài khoản? <a id="showLogin">Đăng nhập</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const showSignUp = document.getElementById("showSignUp");
+    const showLogin = document.getElementById("showLogin");
+
+    showSignUp.addEventListener("click", () => {
+      loginForm.classList.add("hidden");
+      signupForm.classList.remove("hidden");
+    });
+
+    showLogin.addEventListener("click", () => {
+      signupForm.classList.add("hidden");
+      loginForm.classList.remove("hidden");
+    });
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      alert(`Đăng nhập:\nEmail: ${email}`);
+    });
+
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("signupName").value;
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      const confirm = document.getElementById("confirmPassword").value;
+
+      if (password !== confirm) {
+        alert("Mật khẩu không khớp!");
+        return;
+      }
+
+      alert(`Đăng ký:\nTên: ${name}\nEmail: ${email}`);
+    });
+
+    // Social login buttons
+    document.querySelectorAll(".google-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        alert("Chức năng đăng nhập bằng Google sẽ được tích hợp sau.");
+      });
+    });
+
+    document.querySelectorAll(".facebook-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        alert("Chức năng đăng nhập bằng Facebook sẽ được tích hợp sau.");
+      });
+    });
+
+    document.querySelectorAll(".github-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        alert("Chức năng đăng nhập bằng GitHub sẽ được tích hợp sau.");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -54,3 +54,4 @@ function typeText(sender, text, callback) {
   }
   typing();
 }
+
