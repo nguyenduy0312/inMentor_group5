@@ -1,5 +1,5 @@
 # dao/api_khoa_dao.py
-from model.api_khoa import APIKhoa
+from model.api_khoa import APIKhoa # type: ignore
 
 class APIKhoaDAO:
     def __init__(self, connection):
