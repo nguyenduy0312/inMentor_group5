@@ -1,0 +1,153 @@
+.data-engineer {
+  background-color: #f5fafd;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.data-engineer .frame-wrapper {
+  background-color: #f5fafd;
+  width: 1440px;
+  height: 900px;
+}
+
+.data-engineer .frame {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  height: 1450px;
+  top: 75px;
+  left: 120px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  align-items: center;
+  gap: 96px;
+  position: relative;
+}
+
+.data-engineer .data-engineer-c-ng {
+  position: relative;
+  align-self: stretch;
+  height: 130px;
+  margin-top: -1.00px;
+  font-family: "Inter", Helvetica;
+  font-weight: 400;
+  color: transparent;
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 36px;
+}
+
+.data-engineer .text-wrapper {
+  font-weight: 700;
+  color: #000000;
+  line-height: 60px;
+}
+
+.data-engineer .span {
+  color: #474545;
+  font-size: 24px;
+  line-height: 60px;
+}
+
+.data-engineer .a-i-m-h-ng-y-n-m-c-l {
+  position: relative;
+  width: 1094px;
+  height: 951px;
+  font-family: "Inter", Helvetica;
+  font-weight: 400;
+  color: transparent;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: 36px;
+}
+
+.data-engineer .text-wrapper-2 {
+  font-weight: 700;
+  color: #474545;
+  line-height: 60px;
+}
+
+.data-engineer .text-wrapper-3 {
+  font-weight: 500;
+  color: #474545;
+  line-height: 0.1px;
+}
+
+.data-engineer .text-wrapper-4 {
+  font-weight: 500;
+  color: #474545;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.data-engineer .div {
+  display: inline-flex;
+  justify-content: center;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 96px;
+  position: relative;
+}
+
+.data-engineer .quay-li,
+.data-engineer .ti-CV,
+.data-engineer .phng-vn-o {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 16px;
+  position: relative;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.data-engineer .quay-li {
+  background-color: #2553cd;
+}
+
+.data-engineer .ti-CV {
+  background-color: #74cb61;
+}
+
+.data-engineer .phng-vn-o {
+  background-color: #37383a;
+  width: 315px;
+}
+
+.data-engineer .quay-li:hover,
+.data-engineer .ti-CV:hover,
+.data-engineer .phng-vn-o:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.data-engineer .quay-li:active,
+.data-engineer .ti-CV:active,
+.data-engineer .phng-vn-o:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.data-engineer .chi-ti-t {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Inter", Helvetica;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 26px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 64px;
+  white-space: nowrap;
+}
+
+.data-engineer .button {
+  display: none;
+}
