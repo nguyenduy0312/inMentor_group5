@@ -1,23 +1,52 @@
-# dao/phien_phong_van_dao.py
-from model.phien_phong_van import PhienPhongVan
+import mysql.connector
+from datetime import datetime
+from DataBase.connectdb import create_connection  # Hàm kết nối DB
 
-class PhienPhongVanDAO:
-    def __init__(self, connection):
-        self.conn = connection
+def create_interview_session(ma_nguoi_dung):
+    conn = create_connection()
+    cursor = conn.cursor()
 
-    def get_by_user(self, ma_nguoi_dung):
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM phien_phong_van WHERE Ma_Nguoi_Dung = %s", (ma_nguoi_dung,))
-        return cursor.fetchall()
+    sql = """
+        INSERT INTO phien_phong_van (Ma_Nguoi_Dung, Thoi_Gian_Bat_Dau, Trang_Thai)
+        VALUES (%s, %s, %s)
+    """
+    thoi_gian_bat_dau = datetime.now()
+    cursor.execute(sql, (ma_nguoi_dung, thoi_gian_bat_dau, 'dang_dien_ra'))
+    conn.commit()
 
-    def insert(self, phien: PhienPhongVan):
-        cursor = self.conn.cursor()
-        sql = """INSERT INTO phien_phong_van (Ma_Nguoi_Dung, Thoi_Gian_Bat_Dau, 
-                 Thoi_Gian_Ket_Thuc, Trang_Thai, Diem_Tong, Nhan_Xet, 
-                 bao_cao_danh_gia_Ma_Bao_Cao)
-                 VALUES (%s,%s,%s,%s,%s,%s,%s)"""
-        cursor.execute(sql, (phien.Ma_Nguoi_Dung, phien.Thoi_Gian_Bat_Dau,
-                             phien.Thoi_Gian_Ket_Thuc, phien.Trang_Thai,
-                             phien.Diem_Tong, phien.Nhan_Xet,
-                             phien.Ma_Bao_Cao))
-        self.conn.commit()
+    ma_phien = cursor.lastrowid
+    cursor.close()
+    conn.close()
+    return ma_phien
+
+def end_interview_session(ma_phien):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    sql = """
+        UPDATE phien_phong_van
+        SET Thoi_Gian_Ket_Thuc = %s, Trang_Thai = %s
+        WHERE Ma_Phien = %s
+    """
+    thoi_gian_ket_thuc = datetime.now()
+    cursor.execute(sql, (thoi_gian_ket_thuc, 'hoan_thanh', ma_phien))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def get_session_by_user(ma_nguoi_dung):
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    sql = """
+        SELECT * FROM phien_phong_van
+        WHERE Ma_Nguoi_Dung = %s
+        ORDER BY Thoi_Gian_Bat_Dau DESC
+    """
+    cursor.execute(sql, (ma_nguoi_dung,))
+    result = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return result

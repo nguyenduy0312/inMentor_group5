@@ -22,19 +22,19 @@
             </div>
             <div class="tnh-nng-ni-bt">
               <div class="to-bo-co">
-                <img class="analysis" src="https://c.animaapp.com/mav09zljms9Akz/img/analysis-1.png" />
+                <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1.png') }}" />
                 <p class="ph-n-t-ch-c-u-tr-l-i">Tạo báo cáo phản hồi</p>
               </div>
               <div class="nhn-din-ging-ni-hoc">
-                <img class="analysis" src="https://c.animaapp.com/mav09zljms9Akz/img/analysis-1-1.png" />
+                <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1-1.png') }}" />
                 <p class="ph-n-t-ch-c-u-tr-l-i-2">Nhận diện giọng nói <br />hoặc văn bản</p>
               </div>
               <div class="phn-tch-cu-tr-li">
-                <img class="analysis" src="https://c.animaapp.com/mav09zljms9Akz/img/analysis-1-2.png" />
+                <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1-2.png') }}" />
                 <p class="text-wrapper-2">Phân tích câu trả lời</p>
               </div>
               <div class="t-tin-phng-vn">
-                <img class="micro" src="https://c.animaapp.com/mav09zljms9Akz/img/micro--1--1.png" />
+                <img class="micro" src="{{ url_for('static', filename='Images/micro--1--1.png') }}" />
                 <p class="text-wrapper-3">Mô phỏng phỏng vấn thực tế</p>
               </div>
             </div>
@@ -43,19 +43,16 @@
             <p class="n-n-t-ng-AI-luy-n-t">Nền tảng AI<br /><br />luyện tập<br /><br />phỏng vấn</p>
             <p class="text-wrapper-4">Luyện tập phỏng vấn cùng trí tuệ nhân tạo</p>
             <div class="button"><div class="text-wrapper-5">Bắt đầu thôi !</div></div>
-            <img
-              class="chun-b-phng-vn-t"
-              src="https://c.animaapp.com/mav09zljms9Akz/img/chu-n-b--ph-ng-v-n---t-1-removebg-preview-1.png"
-            />
+            <img class="chun-b-phng-vn-t" src="{{ url_for('static', filename='Images/chu-n-bi-phong-van.png') }}" />
           </header>
         </div>
         <div class="navbar">
-          <div class="text-wrapper-6">inMentor</div>
-          <div class="text-wrapper-7">Trang chủ</div>
-          <div class="text-wrapper-8">Về chúng tôi</div>
-          <div class="text-wrapper-9">Phỏng vấn AI</div>
-          <div class="text-wrapper-10">Danh sách việc làm</div>
-          <div class="text-wrapper-11">Feedback</div>
+          <a href="trangchu.html"><div class="text-wrapper-6">inMentor</div></a>
+          <a href="trangchu.html"><div class="text-wrapper-7">Trang chủ</div></a>
+          <a href="trangweb.html"><div class="text-wrapper-8">Về chúng tôi</div></a>
+          <a href="chatbot.html"><div class="text-wrapper-9">Phỏng vấn AI</div></a>
+          <a href="dsvieclam.html"><div class="text-wrapper-10">Danh sách việc làm</div></a>
+          <a href="feedback.html"><div class="text-wrapper-11">Feedback</div></a>
         </div>
       </div>
     </div>

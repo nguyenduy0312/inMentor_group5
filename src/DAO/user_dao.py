@@ -1,22 +1,40 @@
-# dao/user_dao.py
-from model.user import User
+import mysql.connector
+from DataBase.connectdb import create_connection
 
-class UserDAO:
-    def __init__(self, connection):
-        self.conn = connection
+def get_user_by_id(ma_nguoi_dung): # Lấy thông tin người dùng theo ID
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+    sql = "SELECT * FROM user WHERE Ma_Nguoi_Dung = %s"
+    cursor.execute(sql, (ma_nguoi_dung,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user
 
-    def get_by_id(self, ma_nguoi_dung):
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM user WHERE Ma_Nguoi_Dung = %s", (ma_nguoi_dung,))
-        row = cursor.fetchone()
-        return User(*row) if row else None
+def get_user_interview_history(ma_nguoi_dung): # Lấy lịch sử phỏng vấn của người dùng
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
 
-    def insert(self, user: User):
-        cursor = self.conn.cursor()
-        sql = """INSERT INTO user(Ho_Ten, NgaySinh, GioiTinh, Email, SoDienThoai, 
-                                  TenDangNhap, Mat_Khau, Picture, Hoan_Thanh_Ho_So)
-                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-        cursor.execute(sql, (user.Ho_Ten, user.NgaySinh, user.GioiTinh, user.Email,
-                             user.SoDienThoai, user.TenDangNhap, user.Mat_Khau,
-                             user.Picture, user.Hoan_Thanh_Ho_So))
-        self.conn.commit()
+    sql = """
+        SELECT 
+            p.Ma_Phien,
+            p.Thoi_Gian_Bat_Dau,
+            p.Thoi_Gian_Ket_Thuc,
+            p.Trang_Thai,
+            b.Diem_Tong,
+            b.Nhan_Xet,
+            b.Diem_Manh,
+            b.Diem_Yeu,
+            b.Goi_Y_Cai_Thien
+        FROM phien_phong_van p
+        LEFT JOIN bao_cao_danh_gia b ON p.Ma_Phien = b.Ma_Phien
+        WHERE p.Ma_Nguoi_Dung = %s
+        ORDER BY p.Thoi_Gian_Bat_Dau DESC
+    """
+
+    cursor.execute(sql, (ma_nguoi_dung,))
+    history = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return history
