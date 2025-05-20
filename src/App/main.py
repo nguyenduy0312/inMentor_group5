@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.controller.interview_controller import router
+from src.Controller.interview_controller import router
 
 app = FastAPI(title="AI Interview (Groq + LLaMA3)")
 
