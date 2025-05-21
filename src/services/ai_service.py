@@ -28,7 +28,7 @@ async def call_groq(messages):
 
 async def generate_question(topic: str) -> str:
     messages = [
-        {"role": "user", "content": f"Hãy đặt một câu hỏi bằng tiếng việt phỏng vấn kỹ thuật về chủ đề {topic}."}
+        {"role": "user", "content": f"Hãy đóng vai là một nhà tuyển dụng đặt một câu hỏi bằng tiếng việt phỏng vấn kỹ thuật về chủ đề {topic}."}
     ]
     return await call_groq(messages)
 

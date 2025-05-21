@@ -22,7 +22,7 @@ form.addEventListener("submit", async function (e) {
 
 function appendMessage(sender, text) {
   const messageEl = document.createElement("div");
-  messageEl.className = `message ${sender}`;
+  messageEl.className = message ${sender};
   messageEl.textContent = text;
   chatBox.appendChild(messageEl);
   chatBox.scrollTop = chatBox.scrollHeight;
@@ -30,7 +30,7 @@ function appendMessage(sender, text) {
 
 function typeText(sender, text, callback) {
   const messageEl = document.createElement("div");
-  messageEl.className = `message ${sender}`;
+  messageEl.className = message ${sender};
   chatBox.appendChild(messageEl);
 
   let i = 0;
@@ -53,17 +53,19 @@ function toggleSendButton(disabled) {
   sendButton.textContent = disabled ? "Đang gửi..." : "Gửi";
 }
 
+let conversationId = ""; // Biến toàn cục lưu conversation_id
+
+
 async function sendMessageToDify(messageText) {
   try {
-    const response = await fetch("https://api.dify.ai/v1/chat-messages", {
+    const response = await fetch("http://localhost:5000/chat", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: messageText,
-        inputs: { "abc": "backend java" }
+        messageText,
+        conversationId,
       }),
     });
 
@@ -72,9 +74,12 @@ async function sendMessageToDify(messageText) {
     }
 
     const data = await response.json();
+    if (data.conversation_id) {
+      conversationId = data.conversation_id;
+    }
     return data.answer || data.choices?.[0]?.message?.content || "Không có phản hồi từ AI.";
   } catch (error) {
-    console.error("Lỗi gửi tin nhắn đến Dify:", error);
-    return "Đã xảy ra lỗi khi kết nối với AI.";
-  }
+    console.error("Lỗi gửi tin nhắn đến service:", error);
+    return "Đã xảy ra lỗi khi kết nối với service.";
+  } 
 }
