@@ -55,6 +55,9 @@ function toggleSendButton(disabled) {
 
 async function sendMessageToDify(messageText) {
   try {
+    const careerSelect = document.getElementById("career-select");
+    const selectedCareer = careerSelect ? careerSelect.value : "general";
+
     const response = await fetch("https://api.dify.ai/v1/chat-messages", {
       method: "POST",
       headers: {
@@ -63,7 +66,9 @@ async function sendMessageToDify(messageText) {
       },
       body: JSON.stringify({
         query: messageText,
-        inputs: { "abc": "backend java" }
+        inputs: {
+          career: selectedCareer // truyền giá trị dropdown
+        }
       }),
     });
 
@@ -78,3 +83,4 @@ async function sendMessageToDify(messageText) {
     return "Đã xảy ra lỗi khi kết nối với AI.";
   }
 }
+

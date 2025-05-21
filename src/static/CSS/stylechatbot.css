@@ -43,6 +43,34 @@ body {
   color: #2b63d9;
 }
 
+/* Dropdown chọn nghề nghiệp */
+.career-select-wrapper {
+  /*max-width: 900px;
+  width: 100%;
+  margin: 20px auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 16px;*/
+}
+
+.career-select-wrapper label {
+  font-weight: 500;
+  color: #333;
+}
+
+#career-select {
+  padding: 10px 16px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  min-width: 220px;
+}
+
+
 /* Chat layout */
 .chat-container {
   display: flex;
