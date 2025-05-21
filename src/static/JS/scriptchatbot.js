@@ -5,6 +5,8 @@ const chatBox = document.getElementById("chat-box");
 const sendButton = document.getElementById("send-button");
 const startSection = document.getElementById("chat-start");
 
+let conversationId = null; // Chỉ khai báo một lần
+
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
   const userMessage = input.value.trim();
@@ -61,14 +63,14 @@ async function sendMessageToDify(messageText) {
     const response = await fetch("https://api.dify.ai/v1/chat-messages", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query: messageText,
         inputs: {
-          career: selectedCareer // truyền giá trị dropdown
-        }
+          career: selectedCareer
+        },
+        conversation_id: conversationId
       }),
     });
 
@@ -77,10 +79,13 @@ async function sendMessageToDify(messageText) {
     }
 
     const data = await response.json();
+    if (data.conversation_id) {
+      conversationId = data.conversation_id;
+    }
+
     return data.answer || data.choices?.[0]?.message?.content || "Không có phản hồi từ AI.";
   } catch (error) {
-    console.error("Lỗi gửi tin nhắn đến Dify:", error);
-    return "Đã xảy ra lỗi khi kết nối với AI.";
+    console.error("Lỗi gửi tin nhắn đến service:", error);
+    return "Đã xảy ra lỗi khi kết nối với service.";
   }
 }
-
