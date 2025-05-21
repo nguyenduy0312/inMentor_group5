@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>inMentor - Việc làm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#f6fbff] text-[#222] font-sans">
+  <!-- Navbar -->
+   <nav class="flex items-center justify-between max-w-8xl mx-auto px-6 py-6 bg-white shadow-sm">
+  <div class="text-4xl font-bold text-[#1d7ed6] mr-8">inMentor</div> <!-- Tăng kích thước chữ -->
+  <ul class="flex space-x-6 font-medium text-xl"> <!-- Tăng kích thước chữ và giảm khoảng cách -->
+    <li><a href="trangchu.html" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
+    <li><a href="trangweb.html" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
+    <li><a href="chatbot.html" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
+    <li><a href="dsvieclam.html" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
+    <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
+  </ul>
+  <!--<nav class="flex items-center justify-between px-10 py-4 bg-white shadow-sm">
+    <div class="text-xl font-bold text-[#1d7ed6]">inMentor</div>
+    <ul class="flex space-x-6 font-medium text-sm">
+      <li><a href="#" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
+      <li><a href="#" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
+      <li><a href="#" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
+      <li><a href="#" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
+      <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
+    </ul> -->
+  </nav>
+
+  <!-- Header -->
+  <div class="text-center mt-10">
+    <h1 class="text-3xl font-bold mb-2">Khám phá cơ hội nghề nghiệp</h1>
+    <p class="text-gray-500">Tìm kiếm công việc phù hợp với kỹ năng và mong muốn của bạn</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap justify-center gap-4 px-6 mt-8">
+    <select id="locationFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả địa điểm</option>
+    </select>
+    <select id="industryFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả ngành nghề</option>
+    </select>
+    <select id="salaryFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả mức lương</option>
+    </select>
+  </div>
+
+  <!-- Job Cards -->
+  <div id="jobList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-10">
+    <!-- Các thẻ việc làm sẽ được thêm bằng JS -->
+  </div>
+
+  <script>
+    const jobs = [
+      {
+        title: "AI Engineer",
+        salary: "15,000,000 - 20,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin CKL",
+        location: "Tuyên Quang",
+        industry: "AI",
+      },
+      {
+        title: "Data Engineer",
+        salary: "25,000,000 - 30,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin NDD",
+        location: "Hưng Yên",
+        industry: "Data",
+      },
+      {
+        title: "Data Analyst",
+        salary: "20,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin HTH",
+        location: "Nghệ An",
+        industry: "Data",
+      },
+      {
+        title: "BE Development",
+        salary: "20,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin FPT",
+        location: "Hà Nội",
+        industry: "Backend",
+      },
+      {
+        title: "Web FE Development",
+        salary: "20,000,000 - 30,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin Viettel",
+        location: "Hà Nội",
+        industry: "Frontend",
+      },
+      {
+        title: "FullStack",
+        salary: "25,000,000 VNĐ",
+        company: "Công ty Công nghệ thông tin CMC",
+        location: "Hà Nội",
+        industry: "Fullstack",
+      },
+    ];
+
+    const jobList = document.getElementById("jobList");
+    const locationFilter = document.getElementById("locationFilter");
+    const industryFilter = document.getElementById("industryFilter");
+    const salaryFilter = document.getElementById("salaryFilter");
+
+    function renderJobs(filteredJobs) {
+      jobList.innerHTML = "";
+      filteredJobs.forEach((job) => {
+        const card = document.createElement("div");
+        card.className =
+          "bg-white p-6 rounded-xl shadow-md flex flex-col justify-between " +
+          "hover:shadow-xl hover:-translate-y-1 hover:bg-gray-50 transition transform duration-300";
+        card.innerHTML = `
+          <h2 class="text-[#1d7ed6] font-semibold text-lg mb-1">${job.title}</h2>
+          <p class="text-sm text-[#1d7ed6] font-medium mb-2">${job.salary}</p>
+          <p class="text-sm text-gray-700 flex items-center gap-1 mb-1">
+             <i class="ri-building-line"></i>${job.company}
+          </p>
+          <p class="text-sm text-gray-700 flex items-center gap-1 mb-4">
+             <i class="ri-map-pin-line"></i>${job.location}
+          </p>
+          <div class="flex gap-2">
+            <button class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm
+              hover:bg-[#1666c1] hover:shadow-lg transition duration-300 ease-in-out">Chi tiết</button>
+            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm
+              hover:bg-gray-700 hover:shadow-lg transition duration-300 ease-in-out">Phỏng vấn ảo</button>
+          </div>
+        `;
+        jobList.appendChild(card);
+      });
+    }
+
+    function populateFilters() {
+      const locations = [...new Set(jobs.map((job) => job.location))];
+      const industries = [...new Set(jobs.map((job) => job.industry))];
+      const salaries = [...new Set(jobs.map((job) => job.salary))];
+
+      locations.forEach((location) => {
+        const option = document.createElement("option");
+        option.value = location;
+        option.textContent = location;
+        locationFilter.appendChild(option);
+      });
+
+      industries.forEach((industry) => {
+        const option = document.createElement("option");
+        option.value = industry;
+        option.textContent = industry;
+        industryFilter.appendChild(option);
+      });
+
+      salaries.forEach((salary) => {
+        const option = document.createElement("option");
+        option.value = salary;
+        option.textContent = salary;
+        salaryFilter.appendChild(option);
+      });
+    }
+
+    function filterJobs() {
+      const locationValue = locationFilter.value;
+      const industryValue = industryFilter.value;
+      const salaryValue = salaryFilter.value;
+
+      const filtered = jobs.filter((job) => {
+        return (
+          (locationValue === "" || job.location === locationValue) &&
+          (industryValue === "" || job.industry === industryValue) &&
+          (salaryValue === "" || job.salary === salaryValue)
+        );
+      });
+      renderJobs(filtered);
+    }
+
+    locationFilter.addEventListener("change", filterJobs);
+    industryFilter.addEventListener("change", filterJobs);
+    salaryFilter.addEventListener("change", filterJobs);
+
+    populateFilters();
+    renderJobs(jobs);
+  </script>
+</body>
+
+</html>
+;

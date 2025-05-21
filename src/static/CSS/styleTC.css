@@ -118,6 +118,18 @@
   left: 37px;
 }
 
+select {
+  padding: 16px 32px;
+  font-size: 20px;
+  width: 300px;
+  height: 80px;
+  border-radius: 10px;       /* Bo góc */
+  background-color: #f0f0f0; /* Màu nền xám nhạt */
+  border: 1px solid #ccc;
+  color: #333;  
+}
+
+
 .trang-ch .rectangle {
   width: 300px;
   height: 70px;
@@ -633,6 +645,8 @@
 
 .trang-ch .nav-link {
   position: absolute;
+  z-index: 1000;
+  pointer-events: auto;
   width: 190px;
   height: 90px;
   font-family: "Inter", Helvetica;
@@ -642,6 +656,7 @@
   text-align: center;
   letter-spacing: 0;
   line-height: 90px;
+  cursor: pointer;
   text-decoration: none;
   transition: color 0.3s ease;
 }
