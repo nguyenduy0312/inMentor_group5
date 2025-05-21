@@ -20,16 +20,7 @@
     <li><a href="dsvieclam.html" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
     <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
   </ul>
-  <!--<nav class="flex items-center justify-between px-10 py-4 bg-white shadow-sm">
-    <div class="text-xl font-bold text-[#1d7ed6]">inMentor</div>
-    <ul class="flex space-x-6 font-medium text-sm">
-      <li><a href="#" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
-      <li><a href="#" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
-      <li><a href="#" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
-      <li><a href="#" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
-      <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
-    </ul> -->
-  </nav>
+</nav>
 
   <!-- Header -->
   <div class="text-center mt-10">
@@ -47,6 +38,9 @@
     </select>
     <select id="salaryFilter" class="w-60 p-3 rounded-lg border border-gray-300">
       <option value="">Tất cả mức lương</option>
+      <option value="15000000">15 triệu trở lên</option>
+      <option value="20000000">20 triệu trở lên</option>
+      <option value="25000000">25 triệu trở lên</option>
     </select>
   </div>
 
@@ -58,6 +52,7 @@
   <script>
     const jobs = [
       {
+        id: 1,
         title: "AI Engineer",
         salary: "15,000,000 - 20,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin CKL",
@@ -65,6 +60,7 @@
         industry: "AI",
       },
       {
+        id: 2,
         title: "Data Engineer",
         salary: "25,000,000 - 30,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin NDD",
@@ -72,6 +68,7 @@
         industry: "Data",
       },
       {
+        id: 3,
         title: "Data Analyst",
         salary: "20,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin HTH",
@@ -79,6 +76,7 @@
         industry: "Data",
       },
       {
+        id: 4,
         title: "BE Development",
         salary: "20,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin FPT",
@@ -86,6 +84,7 @@
         industry: "Backend",
       },
       {
+        id: 5,
         title: "Web FE Development",
         salary: "20,000,000 - 30,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin Viettel",
@@ -93,6 +92,7 @@
         industry: "Frontend",
       },
       {
+        id: 6,
         title: "FullStack",
         salary: "25,000,000 VNĐ",
         company: "Công ty Công nghệ thông tin CMC",
@@ -123,10 +123,13 @@
              <i class="ri-map-pin-line"></i>${job.location}
           </p>
           <div class="flex gap-2">
-            <button class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm
+            <button onclick="window.location.href='jobdetail.html?id=${job.id}'" 
+              class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm
               hover:bg-[#1666c1] hover:shadow-lg transition duration-300 ease-in-out">Chi tiết</button>
-            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm
+            <button onclick="window.location.href='chatbot.html'" 
+              class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm
               hover:bg-gray-700 hover:shadow-lg transition duration-300 ease-in-out">Phỏng vấn ảo</button>
+
           </div>
         `;
         jobList.appendChild(card);
@@ -152,13 +155,21 @@
         industryFilter.appendChild(option);
       });
 
-      salaries.forEach((salary) => {
+      /*salaries.forEach((salary) => {
         const option = document.createElement("option");
         option.value = salary;
         option.textContent = salary;
         salaryFilter.appendChild(option);
-      });
+      });*/
     }
+
+    function getMinSalary(salaryStr) {
+      const match = salaryStr.match(/[\d,]+/g);
+      if (!match || match.length === 0) return 0;
+      const minStr = match[0].replace(/,/g, '');
+      return parseInt(minStr, 10);
+    }
+
 
     function filterJobs() {
       const locationValue = locationFilter.value;
@@ -166,11 +177,20 @@
       const salaryValue = salaryFilter.value;
 
       const filtered = jobs.filter((job) => {
+        const minSalary = getMinSalary(job.salary);
+        const salaryOk = salaryValue === "" || minSalary >= Number(salaryValue);
+
+        return (
+          (locationValue === "" || job.location === locationValue) &&
+          (industryValue === "" || job.industry === industryValue) &&
+          salaryOk
+        );
+      /*const filtered = jobs.filter((job) => {
         return (
           (locationValue === "" || job.location === locationValue) &&
           (industryValue === "" || job.industry === industryValue) &&
           (salaryValue === "" || job.salary === salaryValue)
-        );
+        );*/
       });
       renderJobs(filtered);
     }

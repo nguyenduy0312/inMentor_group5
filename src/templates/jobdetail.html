@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chi tiết công việc</title>
+    <link rel="stylesheet" href="../static/CSS/globals.css" />
+    <link rel="stylesheet" href="../static/CSS/stylede.css" />
+  </head>
+  <body>
+    <div class="data-engineer">
+      <div class="frame-wrapper">
+        <div class="frame">
+          <p class="data-engineer-c-ng">
+            <span class="text-wrapper" id="job-title">Tên công việc<br /></span>
+            <span class="span" id="company-name">Tên công ty<br /><br /><br /><br /></span>
+          </p>
+          <p class="a-i-m-h-ng-y-n-m-c-l">
+            <span class="text-wrapper-2">Địa điểm: </span>
+            <span class="text-wrapper-3" id="location">Địa điểm<br /></span>
+            <span class="text-wrapper-2">Mức lương: </span>
+            <span class="text-wrapper-3" id="salary">Mức lương<br /></span>
+            <span class="text-wrapper-2">Ngành: </span>
+            <span class="text-wrapper-3" id="field">Ngành<br /><br /></span>
+            <span class="text-wrapper-4" id="description">
+              Mô tả công việc ở đây...
+            </span>
+          </p>
+          <div class="div">
+            <a href="dsvieclam.html">
+              <button class="quay-li">
+                <div class="chi-ti-t">Quay lại</div>
+              </button>
+            </a>
+            <a href="cv.html">
+              <button class="ti-CV">
+                <div class="chi-ti-t">Tải CV</div>
+              </button>
+            </a>
+            <a href="chatbot.html">
+              <button class="phng-vn-o">
+                <div class="chi-ti-t">Phỏng vấn ảo</div>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const jobs = [
+        {
+          id: 1,
+          title: "AI Engineer",
+          company: "Công ty Công nghệ thông tin CKL",
+          location: "Tuyên Quang",
+          salary: "15,000,000 - 50,000,000",
+          field: "AI",
+          description: `
+              • Xây dựng, huấn luyện và triển khai các mô hình AI/ML (NLP, LLM, Deep Learning...)<br />
+              • Thiết kế hệ thống đánh giá tự động cho câu trả lời người dùng dựa trên AI.<br />
+              • Làm việc với các API AI như OpenAI, HuggingFace, Cohere,...<br />
+              • Tối ưu và đánh giá hiệu suất mô hình: độ chính xác, tốc độ, độ thiên lệch (bias)...<br />
+              • Phối hợp với các team Backend/Frontend để tích hợp AI vào hệ thống.<br />
+              • Làm việc với dữ liệu: xử lý, làm sạch, phân tích và chuẩn hóa.<br />
+              • Sử dụng Python và các thư viện: PyTorch, TensorFlow, Scikit-learn, Pandas,...<br />
+              • Ưu tiên có kinh nghiệm với mô hình ngôn ngữ lớn (LLM), prompt engineering, hoặc fine-tuning.<br />
+              • Biết triển khai mô hình dưới dạng API (Flask/FastAPI), có thể dùng Docker hoặc CI/CD.<br />
+              • Tư duy giải quyết vấn đề tốt, chủ động học hỏi, phối hợp nhóm hiệu quả.  
+          `
+        },
+        {
+          id: 3,
+          title: "Data Analyst",
+          company: "Công ty Công nghệ thông tin HTH",
+          location: "Nghệ An",
+          salary: "15,000,000 - 50,000,000",
+          field: "Data",
+          description: `
+              • Thu thập dữ liệu từ các nguồn: database, báo cáo, API,...<br />
+              • Làm sạch và xử lý dữ liệu bằng SQL, Excel, hoặc Python.<br />
+              • Phân tích xu hướng, mối tương quan, KPI, hiệu suất...<br />
+              • Trực quan hóa dữ liệu qua biểu đồ, dashboard (Power BI, Tableau, Looker,...).<br />
+              • Viết báo cáo phân tích cho bộ phận kinh doanh, marketing, sản phẩm,...<br />
+              • Tạo mô hình phân tích đơn giản (forecast, cohort, segmentation). <br />
+              • Tương tác với Data Engineer để đảm bảo dữ liệu đầy đủ và chính xác.<br />
+              • Thành thạo SQL để truy xuất và xử lý dữ liệu.<br />
+              • Kỹ năng phân tích dữ liệu bằng Excel, Python (Pandas/Matplotlib) hoặc R.<br />
+              • Biết sử dụng các công cụ BI: Power BI, Tableau, Google Data Studio,...<br />
+              • Hiểu cơ bản về thống kê mô tả, xác suất, KPI.<br />
+              • Tư duy logic, nhạy bén với số liệu, có khả năng kể chuyện bằng dữ liệu.<br />
+          `
+        },
+        {
+          id: 2,
+          title: "Data Engineer",
+          company: "Công ty Công nghệ thông tin NDD",
+          location: "Hưng Yên",
+          salary: "25,000,000 - 50,000,000",
+          field: "Data",
+          description: `
+            >Thiết kế và triển khai pipeline xử lý dữ liệu (ETL/ELT).<br />Kết nối và thu thập dữ liệu từ nhiều nguồn
+              (database, API, file log, cloud,...).<br />Làm sạch, chuyển đổi (transform), và chuẩn hóa dữ liệu.<br />Quản
+              lý hệ thống lưu trữ dữ liệu lớn (Data Lake, Data Warehouse như BigQuery, Snowflake,...).<br />Đảm bảo dữ
+              liệu chính xác, ổn định, có thể mở rộng.<br />Làm việc với các công cụ như Apache Spark, Kafka, Airflow,
+              DBT,...<br />Viết script xử lý dữ liệu bằng Python, SQL hoặc Scala.<br />Hỗ trợ Data Analyst và Data
+              Scientist truy cập dữ liệu hiệu quả.<br />Thành thạo SQL, hiểu cấu trúc dữ liệu và cách tối ưu truy
+              vấn.<br />Có kinh nghiệm với xử lý dữ liệu lớn (big data): Hadoop, Spark,...<br />Biết lập trình bằng
+              Python (hoặc Java/Scala).<br />Hiểu về các hệ quản trị cơ sở dữ liệu (PostgreSQL, MySQL,
+              MongoDB,...).</span
+            >
+          `
+        }
+        // Bạn có thể thêm công việc mới vào đây theo cấu trúc trên
+      ];
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const jobId = parseInt(urlParams.get("id"));
+      const job = jobs.find(j => j.id === jobId);
+
+      if (job) {
+        document.getElementById("job-title").innerHTML = job.title + "<br>";
+        document.getElementById("company-name").innerHTML = job.company + "<br><br><br><br>";
+        document.getElementById("location").innerHTML = job.location + "<br>";
+        document.getElementById("salary").innerHTML = job.salary + "<br>";
+        document.getElementById("field").innerHTML = job.field + "<br><br>";
+        document.getElementById("description").innerHTML = job.description;
+      } else {
+        document.querySelector(".frame").innerHTML = "<h2 style='color:red'>Không tìm thấy công việc</h2>";
+      }
+    </script>
+  </body>
+</html>

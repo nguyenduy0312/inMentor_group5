@@ -5,12 +5,13 @@ const chatBox = document.getElementById("chat-box");
 const sendButton = document.getElementById("send-button");
 const startSection = document.getElementById("chat-start");
 
-let conversationId = null; // Chỉ khai báo một lần
-
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
   const userMessage = input.value.trim();
   if (!userMessage) return;
+
+  // Lấy giá trị lĩnh vực nghề nghiệp từ select
+  const careerValue = careerSelect.value;
 
   appendMessage("user", userMessage);
   input.value = "";
@@ -18,7 +19,8 @@ form.addEventListener("submit", async function (e) {
 
   if (startSection) startSection.style.display = "none";
 
-  const aiReply = await sendMessageToDify(userMessage);
+  // Truyền careerValue vào hàm gửi
+  const aiReply = await sendMessageToDify(userMessage, careerValue);
   typeText("ai", aiReply, () => toggleSendButton(false));
 });
 
@@ -55,22 +57,24 @@ function toggleSendButton(disabled) {
   sendButton.textContent = disabled ? "Đang gửi..." : "Gửi";
 }
 
-async function sendMessageToDify(messageText) {
-  try {
-    const careerSelect = document.getElementById("career-select");
-    const selectedCareer = careerSelect ? careerSelect.value : "general";
+const careerSelect = document.getElementById("career-select");
 
-    const response = await fetch("https://api.dify.ai/v1/chat-messages", {
+careerValue = careerSelect.value;
+
+let conversationId = ""; // Biến toàn cục lưu conversation_id
+
+
+async function sendMessageToDify(messageText, careerValue ) {
+  try {
+    const response = await fetch("http://localhost:5000/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: messageText,
-        inputs: {
-          career: selectedCareer
-        },
-        conversation_id: conversationId
+        messageText,
+        conversationId,
+        inputs: { "abc": careerValue }  
       }),
     });
 
@@ -82,7 +86,6 @@ async function sendMessageToDify(messageText) {
     if (data.conversation_id) {
       conversationId = data.conversation_id;
     }
-
     return data.answer || data.choices?.[0]?.message?.content || "Không có phản hồi từ AI.";
   } catch (error) {
     console.error("Lỗi gửi tin nhắn đến service:", error);
