@@ -1,42 +1,39 @@
-import os
-import httpx
-from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+import requests
+from flask_cors import CORS
 
-load_dotenv(dotenv_path="../../Backend/.env")
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "llama3-8b-8192"
+app = Flask(__name__)
+CORS(app)
 
-headers = {
-    "Authorization": f"Bearer {GROQ_API_KEY}",
-    "Content-Type": "application/json"
-}
+API_KEY = ""
 
-async def call_groq(messages):
-    async with httpx.AsyncClient() as client:
-        response = await client.post(
-            GROQ_API_URL,
-            headers=headers,
-            json={
-                "model": MODEL,
-                "messages": messages,
-                "temperature": 0.7
-            }
-        )
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    message_text = data.get('messageText')
+    conversation_id = data.get('conversationId', '')
 
-async def generate_question(topic: str) -> str:
-    messages = [
-        {"role": "user", "content": f"Hãy đóng vai là một nhà tuyển dụng đặt một câu hỏi bằng tiếng việt phỏng vấn kỹ thuật về chủ đề {topic}."}
-    ]
-    return await call_groq(messages)
+    payload = {
+        "query": message_text,
+        "inputs": {"abc": "backend java"},
+        "response_mode": "blocking",
+        "conversation_id": conversation_id,
+        "user": "abc-123",
+        "files": []
+    }
 
-async def evaluate_answer(question: str, answer: str) -> str:
-    messages = [
-        {"role": "user", "content": f"""Bạn là nhà tuyển dụng.  
-Câu hỏi: "{question}"  
-Câu trả lời của ứng viên: "{answer}"  
-Hãy đánh giá câu trả lời bằng tiếng việt."""}
-    ]
-    return await call_groq(messages)
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.post(
+        "https://api.dify.ai/v1/chat-messages",
+        json=payload,
+        headers=headers
+    )
+
+    return jsonify(response.json()), response.status_code
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=False)

@@ -22,7 +22,7 @@ form.addEventListener("submit", async function (e) {
 
 function appendMessage(sender, text) {
   const messageEl = document.createElement("div");
-  messageEl.className = message ${sender};
+  messageEl.className = `message ${sender}`;
   messageEl.textContent = text;
   chatBox.appendChild(messageEl);
   chatBox.scrollTop = chatBox.scrollHeight;
@@ -30,7 +30,7 @@ function appendMessage(sender, text) {
 
 function typeText(sender, text, callback) {
   const messageEl = document.createElement("div");
-  messageEl.className = message ${sender};
+  messageEl.className = `message ${sender}`;
   chatBox.appendChild(messageEl);
 
   let i = 0;
@@ -81,5 +81,5 @@ async function sendMessageToDify(messageText) {
   } catch (error) {
     console.error("Lỗi gửi tin nhắn đến service:", error);
     return "Đã xảy ra lỗi khi kết nối với service.";
-  } 
+  }
 }
