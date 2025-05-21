@@ -10,13 +10,17 @@ form.addEventListener("submit", async function (e) {
   const userMessage = input.value.trim();
   if (!userMessage) return;
 
+  // Lấy giá trị lĩnh vực nghề nghiệp từ select
+  const careerValue = careerSelect.value;
+
   appendMessage("user", userMessage);
   input.value = "";
   toggleSendButton(true);
 
   if (startSection) startSection.style.display = "none";
 
-  const aiReply = await sendMessageToDify(userMessage);
+  // Truyền careerValue vào hàm gửi
+  const aiReply = await sendMessageToDify(userMessage, careerValue);
   typeText("ai", aiReply, () => toggleSendButton(false));
 });
 
@@ -53,10 +57,14 @@ function toggleSendButton(disabled) {
   sendButton.textContent = disabled ? "Đang gửi..." : "Gửi";
 }
 
+const careerSelect = document.getElementById("career-select");
+
+careerValue = careerSelect.value;
+
 let conversationId = ""; // Biến toàn cục lưu conversation_id
 
 
-async function sendMessageToDify(messageText) {
+async function sendMessageToDify(messageText, careerValue ) {
   try {
     const response = await fetch("http://localhost:5000/chat", {
       method: "POST",
@@ -66,6 +74,7 @@ async function sendMessageToDify(messageText) {
       body: JSON.stringify({
         messageText,
         conversationId,
+        inputs: { "abc": careerValue }  
       }),
     });
 
