@@ -1,33 +1,22 @@
-# File này sẽ trung gian kết nối logic giữa các DAO và ai_service
-from src.DAO.phien_phong_van_dao import create_interview_session, end_interview_session
-from src.DAO.cau_hoi_tra_loi_dao import add_question_answer, get_qas_by_session
-from src.DAO.bao_cao_danh_gia_dao import save_report
-from src.services.ai_service import generate_question, evaluate_answer, generate_final_report
+from datetime import datetime
+from DAO.phien_phong_van_dao import create_interview_session
+from DAO.cau_hoi_tra_loi_dao import add_question_answer
+from DAO.bao_cao_danh_gia_dao import create_report
 
-# Tạo mới một phiên phỏng vấn cho người dùng
-def start_interview_session(user_id: int) -> int:
-    return create_interview_session(user_id)
+# Hàm xử lý tạo phiên phỏng vấn mới cho người dùng
+def handle_create_session(user_id):
+    user_id = 1  # Mặc định sử dụng user_id = 1
+    phien_id = create_interview_session(user_id)  # Gọi DAO để lưu vào DB
+    return phien_id  # Trả về ID của phiên phỏng vấn vừa tạo
 
-# Kết thúc một phiên phỏng vấn
-def finish_interview_session(ma_phien: int) -> dict:
-    qas = get_qas_by_session(ma_phien)
-    report = generate_final_report(qas)
-    save_report(ma_phien, report)
-    end_interview_session(ma_phien)
-    return report
+# Hàm xử lý lưu danh sách câu hỏi và câu trả lời vào DB
+def handle_save_qa(phien_id, qa_list):
+    # Nếu qa_list là list các dict {question:..., answer:...}
+    for qa in qa_list:
+        cau_hoi = qa.get('question')
+        tra_loi = qa.get('answer')
+        add_question_answer(phien_id, cau_hoi, tra_loi)  # Gọi DAO lưu từng Q&A
 
-# Xử lý một vòng hỏi - trả lời
-def handle_question_answer(ma_phien: int, topic: str, user_answer: str = None, last_question: str = None) -> dict:
-    if last_question and user_answer:
-        # Đánh giá và lưu lại cặp Q&A
-        eval_result = evaluate_answer(last_question, user_answer)
-        add_question_answer(ma_phien, last_question, user_answer)
-    else:
-        eval_result = None
-
-    # Sinh câu hỏi tiếp theo
-    next_question = generate_question(topic)
-    return {
-        "question": next_question,
-        "evaluation": eval_result
-    }
+# Hàm xử lý lưu đánh giá và điểm số AI vào DB
+def handle_save_evaluation(phien_id, danhgia, diemso):
+    create_report(phien_id, danhgia, diemso)  # Gọi DAO để lưu đánh giá
