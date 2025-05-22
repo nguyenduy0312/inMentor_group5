@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang cá nhân</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 15px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    .navbar ul li {
+      position: relative;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: black;
+      font-weight: 500;
+    }
+
+    .navbar ul li a:hover {
+      color: #007bff;
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 10;
+    }
+
+    .dropdown li {
+      margin-bottom: 10px;
+    }
+
+    .dropdown li:last-child {
+      margin-bottom: 0;
+    }
+
+    .navbar ul li:hover .dropdown {
+      display: block;
+    }
+
+    /* Profile Info */
+    .profile-container {
+      background-color: white;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .profile-container img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-container h2 {
+      margin: 15px 0 5px;
+    }
+
+    .profile-container p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .edit-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">inMentor</div>
+    <ul>
+      <li><a href="trangchu.html">Trang chủ</a></li>
+      <li><a href="trangweb.html">Về chúng tôi</a></li>
+      <li><a href="pvan.html">Phỏng vấn AI</a></li>
+      <li><a href="dsvieclam.html">Danh sách việc làm</a></li>
+      <li><a href="#">Feedback</a></li>
+      <li id="accountMenu">
+        <a href="use.html" id="accountLink">Tài khoản</a>
+        <ul class="dropdown" id="accountDropdown">
+          <li><a href="#">Thông tin cá nhân</a></li>
+          <li><a href="#">Đăng xuất</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Profile Section -->
+  <div class="profile-container" id="profileSection" style="display: none;">
+    <img src="https://via.placeholder.com/120" alt="Ảnh đại diện">
+    <h2>Nguyễn Văn A</h2>
+    <p><strong>Email:</strong> nguyenvana@example.com</p>
+    <p><strong>Điện thoại:</strong> 0987 654 321</p>
+    <p><strong>Vị trí:</strong> Hà Nội, Việt Nam</p>
+    <p><strong>Kỹ năng:</strong> HTML, CSS, JavaScript</p>
+    <p><strong>Mô tả:</strong> Tôi là một lập trình viên đam mê với công nghệ và phát triển web.</p>
+    <button class="edit-btn">Chỉnh sửa thông tin</button>
+  </div>
+
+  <script>
+    // Giả lập trạng thái đăng nhập từ localStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const accountLink = document.getElementById("accountLink");
+    const dropdownMenu = document.getElementById("accountDropdown");
+    const profileSection = document.getElementById("profileSection");
+
+    if (!isLoggedIn) {
+      dropdownMenu.style.display = "none";
+      accountLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "login.html"; // Chuyển hướng đến trang đăng nhập
+      });
+    } else {
+      // Nếu đã đăng nhập thì hiện thông tin người dùng
+      profileSection.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
