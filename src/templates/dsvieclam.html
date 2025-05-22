@@ -14,10 +14,10 @@
    <nav class="flex items-center justify-between max-w-8xl mx-auto px-6 py-6 bg-white shadow-sm">
   <div class="text-4xl font-bold text-[#1d7ed6] mr-8">inMentor</div> <!-- Tăng kích thước chữ -->
   <ul class="flex space-x-6 font-medium text-xl"> <!-- Tăng kích thước chữ và giảm khoảng cách -->
-    <li><a href="trangchu.html" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
-    <li><a href="trangweb.html" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
-    <li><a href="chatbot.html" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
-    <li><a href="dsvieclam.html" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
+    <li><a href="trangchu" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
+    <li><a href="trangweb" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
+    <li><a href="pvan" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
+    <li><a href="dsvieclam" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
     <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
   </ul>
 </nav>
@@ -123,10 +123,10 @@
              <i class="ri-map-pin-line"></i>${job.location}
           </p>
           <div class="flex gap-2">
-            <button onclick="window.location.href='jobdetail.html?id=${job.id}'" 
+            <button onclick="window.location.href='jobdetail?id=${job.id}'" 
               class="bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm
               hover:bg-[#1666c1] hover:shadow-lg transition duration-300 ease-in-out">Chi tiết</button>
-            <button onclick="window.location.href='chatbot.html'" 
+            <button onclick="window.location.href='chatbot'" 
               class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm
               hover:bg-gray-700 hover:shadow-lg transition duration-300 ease-in-out">Phỏng vấn ảo</button>
 

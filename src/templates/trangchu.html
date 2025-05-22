@@ -227,16 +227,16 @@
         <nav>
           <ul>
             <li>
-              <a href="trangchu.html">Trang chủ</a>
+              <a href="trangchu">Trang chủ</a>
             </li>
             <li>
-              <a href="trangweb.html">Về chúng tôi</a>
+              <a href="trangweb">Về chúng tôi</a>
             </li>
             <li>
-              <a href="chatbot.html">Phỏng vấn AI</a>
+              <a href="pvan">Phỏng vấn AI</a>
             </li>
             <li>
-              <a href="dsvieclam.html">Danh sách việc làm</a>
+              <a href="dsvieclam">Danh sách việc làm</a>
             </li>
             <li>
               <a href="#">Feedback</a>
@@ -326,21 +326,21 @@
       
       function redirectToUser() {
         if (tenNguoiDung) {
-          window.location.href = '../user.html'
+          window.location.href = 'user'
         } else {
-          window.location.href = '../templates/login.html'
+          window.location.href = 'login'
         }
       }
       function batDauPhongVan() {
         // Nếu bạn muốn kiểm tra đăng nhập trước
         if (!tenNguoiDung) {
           alert('Vui lòng đăng nhập để bắt đầu phỏng vấn.')
-          window.location.href = '../templates/login.html'
+          window.location.href = 'login'
           return
         }
       
         // Nếu đã đăng nhập thì chuyển trang
-        window.location.href = 'chatbot.html'
+        window.location.href = 'pvan'
       }
     </script>
   </body>
