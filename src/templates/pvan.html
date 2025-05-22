@@ -6,19 +6,17 @@
     <link rel="stylesheet" href="../static/CSS/globals.css" />
     <link rel="stylesheet" href="../static/CSS/pvan.css" />
   </head>
+  
   <body>
     <div class="tnh-nng-phng-vn">
       <div class="div">
         <div class="overlap-group">
           <div class="body">
-            <div class="frame"><p class="text-wrapper">Giới thiệu về tính năng phỏng vấn với AI</p></div>
+            <div class="frame">
+              <p class="text-wrapper">Giới thiệu về tính năng phỏng vấn với AI</p>
+            </div>
             <div class="div-wrapper">
-              <p class="p">
-                Phỏng vấn AI là tính năng sử dụng trí tuệ nhân tạo để mô phỏng quá trình phỏng vấn tuyển dụng một cách
-                tự động, chuyên nghiệp và thực tế. Đây là một giải pháp hiện đại giúp người dùng – đặc biệt là sinh viên
-                hoặc ứng viên – luyện tập kỹ năng phỏng vấn, đánh giá bản thân và cải thiện hiệu suất trước buổi phỏng
-                vấn thật.
-              </p>
+              <p class="p">Phỏng vấn AI là tính năng sử dụng trí tuệ nhân tạo để mô phỏng quá trình phỏng vấn tuyển dụng một cách tự động, chuyên nghiệp và thực tế. Đây là một giải pháp hiện đại giúp người dùng – đặc biệt là sinh viên hoặc ứng viên – luyện tập kỹ năng phỏng vấn, đánh giá bản thân và cải thiện hiệu suất trước buổi phỏng vấn thật.</p>
             </div>
             <div class="tnh-nng-ni-bt">
               <div class="to-bo-co">
@@ -27,7 +25,9 @@
               </div>
               <div class="nhn-din-ging-ni-hoc">
                 <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1-1.png') }}" />
-                <p class="ph-n-t-ch-c-u-tr-l-i-2">Nhận diện giọng nói <br />hoặc văn bản</p>
+                <p class="ph-n-t-ch-c-u-tr-l-i-2">
+                  Nhận diện giọng nói <br />hoặc văn bản
+                </p>
               </div>
               <div class="phn-tch-cu-tr-li">
                 <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1-2.png') }}" />
@@ -40,11 +40,12 @@
             </div>
           </div>
           <header class="header">
-            <p class="n-n-t-ng-AI-luy-n-t">Nền tảng AI<br /><br />luyện tập<br /><br />phỏng vấn</p>
+            <p class="n-n-t-ng-AI-luy-n-t">
+              Nền tảng AI<br /><br />luyện tập<br /><br />phỏng vấn
+            </p>
             <p class="text-wrapper-4">Luyện tập phỏng vấn cùng trí tuệ nhân tạo</p>
-            <a href="chatbot.html" class="button">
-            <div class="text-wrapper-5">Bắt đầu thôi !</div>
-            </a>
+            <button id="start-button" class="button"><div class="text-wrapper-5">Bắt đầu thôi !</div></button>
+            <!-- <a href="chatbot.html" class="button"><div class="text-wrapper-5">Bắt đầu thôi !</div></a> -->
             <img class="chun-b-phng-vn-t" src="{{ url_for('static', filename='Images/chu-n-bi-phong-van.png') }}" />
           </header>
         </div>
@@ -58,5 +59,37 @@
         </div>
       </div>
     </div>
+    <!-- Cuối cùng trong body -->
+<script>
+  document.getElementById('start-button').addEventListener('click', async function () {
+    const maNguoiDung = 123;
+
+    try {
+      const response = await fetch('/api/create_interview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ma_nguoi_dung: maNguoiDung })
+      });
+
+      if (!response.ok) {
+        throw new Error('Không thể tạo phiên phỏng vấn');
+      }
+
+      const data = await response.json();
+      const maPhien = data.ma_phien;
+
+      localStorage.setItem('interview_id', maPhien);
+      window.location.href = 'chatbot.html';
+    } catch (error) {
+      console.error('Lỗi:', error);
+      alert('Đã xảy ra lỗi khi tạo phiên phỏng vấn.');
+    }
+  });
+</script>
+</body>
+</html>
+
   </body>
 </html>

@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from DataBase.connectdb import create_connection, close_connection
 
-login_bp = Blueprint("login_bp", __name__)
+login_bp = Blueprint("login_bp", __name__, template_folder='../../templates')
+# Đường dẫn đến thư mục templates
 
 @login_bp.route("/")
 def index():
