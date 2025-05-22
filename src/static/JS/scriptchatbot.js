@@ -57,6 +57,18 @@ function toggleSendButton(disabled) {
   sendButton.textContent = disabled ? "Đang gửi..." : "Gửi";
 }
 
+function toggleDropdown() {
+  const dropdown = document.getElementById('accountDropdown')
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'
+}
+
+document.addEventListener('click', function (event) {
+  const dropdown = document.getElementById('accountDropdown')
+  if (!event.target.closest('.account')) {
+    dropdown.style.display = 'none'
+  }
+})
+
 const careerSelect = document.getElementById("career-select");
 
 careerValue = careerSelect.value;

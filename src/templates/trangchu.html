@@ -63,7 +63,7 @@
         text-decoration: none;
         color: #333;
         font-size: 18px; /* Tăng kích thước chữ cho link nav */
-        font-weight: 500;
+        font-weight: 600;
         transition: color 0.2s ease;
       }
       
@@ -326,21 +326,21 @@
       
       function redirectToUser() {
         if (tenNguoiDung) {
-          window.location.href = 'user'
+          window.location.href = '/user'
         } else {
-          window.location.href = 'login'
+          window.location.href = '/login'
         }
       }
       function batDauPhongVan() {
         // Nếu bạn muốn kiểm tra đăng nhập trước
         if (!tenNguoiDung) {
           alert('Vui lòng đăng nhập để bắt đầu phỏng vấn.')
-          window.location.href = 'login'
+          window.location.href = '/login'
           return
         }
       
         // Nếu đã đăng nhập thì chuyển trang
-        window.location.href = 'pvan'
+        window.location.href = '/pvan'
       }
     </script>
   </body>
