@@ -20,7 +20,7 @@
             </div>
             <div class="tnh-nng-ni-bt">
               <div class="to-bo-co">
-                <img class="analysis" src="{{ url_for('static', filename='Images/analysis-1.png') }}" />
+                <img class="analysis" src="../static/Images/analysis-1.png" />
                 <p class="ph-n-t-ch-c-u-tr-l-i">Tạo báo cáo phản hồi</p>
               </div>
               <div class="nhn-din-ging-ni-hoc">
@@ -53,7 +53,7 @@
           <a href="trangchu"><div class="text-wrapper-6">inMentor</div></a>
           <a href="trangchu"><div class="text-wrapper-7">Trang chủ</div></a>
           <a href="trangweb"><div class="text-wrapper-8">Về chúng tôi</div></a>
-          <a href="pvan"><div class="text-wrapper-9">Phỏng vấn AI</div></a>
+          <a href="chatbot"><div class="text-wrapper-9">Phỏng vấn AI</div></a>
           <a href="dsvieclam"><div class="text-wrapper-10">Danh sách việc làm</div></a>
           <a href="feedback"><div class="text-wrapper-11">Feedback</div></a>
         </div>
@@ -62,10 +62,10 @@
     <!-- Cuối cùng trong body -->
 <script>
   document.getElementById('start-button').addEventListener('click', async function () {
-    const maNguoiDung = 123;
+    const maNguoiDung = 1;
 
     try {
-      const response = await fetch('/api/create_interview', {
+      const response = await fetch('/api/phongvan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

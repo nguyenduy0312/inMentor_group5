@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>inMentor</title>
     <style>
+      /* Giữ nguyên phần style của bạn */
       :root {
         --primary-color: #2563eb;
         --hover-color: #1e40af;
@@ -13,7 +14,7 @@
         --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         --border-radius: 12px;
       }
-      
+
       body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -21,79 +22,78 @@
         line-height: 1.6;
         color: #333;
       }
-      
+
       header {
         background-color: white;
-        padding: 0; /* Tăng padding để header rộng hơn */
+        padding: 0;
         display: flex;
-        justify-content: center; /* Căn giữa toàn bộ nội dung header */
+        justify-content: center;
         align-items: center;
         border-bottom: 1px solid #ddd;
-        box-shadow: var(--shadow); /* Thêm shadow cho header */
+        box-shadow: var(--shadow);
       }
-      
+
       .header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
         max-width: 1536px;
-        margin-left: auto; /* Tương đương mx-auto */
-        margin-right: auto; /* Tương đương mx-auto */
-        padding: 15px 24px; /* Tương đương py-6 (24px) và px-6 (24px) */
-        box-sizing: border-box; /* Đảm bảo padding không làm tràn ra ngoài */
+        margin: 0 auto;
+        padding: 15px 24px;
+        box-sizing: border-box;
       }
-      
+
       .logo-text {
         color: var(--primary-color);
         margin: 0;
-        font-size: 36px; /* Tăng kích thước chữ rất lớn cho logo text */
-        font-weight: 700; /* Đậm hơn */
+        font-size: 36px;
+        font-weight: 700;
       }
-      
+
       nav ul {
         display: flex;
         list-style: none;
         padding: 0;
         margin: 0;
-        gap: 30px; /* Tăng khoảng cách giữa các mục nav */
+        gap: 30px;
       }
-      
+
       nav a {
         text-decoration: none;
         color: #333;
-        font-size: 18px; /* Tăng kích thước chữ cho link nav */
+        font-size: 18px;
         font-weight: 500;
         transition: color 0.2s ease;
       }
-      
+
       nav a:hover {
         color: var(--primary-color);
-        text-decoration: none; /* Bỏ underline khi hover nếu không muốn */
+        text-decoration: none;
       }
-      
+
       h2 {
         text-align: center;
-        font-size: 32px; /* Tăng kích thước chữ cho tiêu đề chào mừng */
+        font-size: 32px;
         font-weight: 700;
         margin-top: 40px;
         margin-bottom: 40px;
         color: #333;
       }
-      
+
       h2 span {
         color: var(--primary-color);
       }
-      
+
       .container {
         max-width: 1100px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
-        gap: 40px; /* Khoảng cách giữa các card */
-        padding: 20px 20px 60px; /* Padding dưới để tạo không gian */
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 20px 20px 60px;
       }
-      
+
       .card {
         background-color: var(--card-bg);
         border-radius: var(--border-radius);
@@ -103,114 +103,113 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center; /* Căn giữa nội dung theo chiều ngang */
-        text-align: center; /* Căn giữa văn bản */
-        min-height: 280px; /* Đảm bảo chiều cao tối thiểu */
+        align-items: center;
+        text-align: center;
+        min-height: 280px;
       }
-      
+
       .card:hover {
-        transform: translateY(-8px); /* Nhấc lên nhiều hơn một chút */
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Shadow rõ hơn khi hover */
+        transform: translateY(-8px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       }
-      
+
       .card h3 {
         margin-top: 0;
-        margin-bottom: 25px; /* Khoảng cách dưới tiêu đề card */
-        font-size: 24px; /* Kích thước chữ lớn hơn cho tiêu đề card */
+        margin-bottom: 25px;
+        font-size: 24px;
         color: #333;
         font-weight: 600;
       }
-      
+
       label {
-        display: block; /* Đảm bảo label chiếm một dòng riêng */
+        display: block;
         margin-top: 15px;
-        font-weight: 600; /* Đậm hơn */
+        font-weight: 600;
         font-size: 15px;
         color: #555;
-        margin-bottom: 8px; /* Khoảng cách dưới label */
+        margin-bottom: 8px;
       }
-      
+
       select,
       input[type='file'] {
         width: 100%;
-        max-width: 350px; /* Mở rộng chiều rộng input/select một chút */
+        max-width: 350px;
         padding: 12px;
         border: 1px solid #ccc;
         border-radius: 8px;
         font-size: 15px;
-        box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
-        margin-bottom: 15px; /* Khoảng cách dưới input/select */
+        box-sizing: border-box;
+        margin-bottom: 15px;
       }
-      
+
       button {
         background-color: var(--primary-color);
         color: white;
-        padding: 14px 30px; /* Tăng padding cho nút */
+        padding: 14px 30px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 16px; /* Tăng kích thước chữ cho nút */
+        font-size: 16px;
         font-weight: 600;
-        margin-top: auto; /* Đẩy nút xuống dưới cùng của card */
+        margin-top: auto;
         transition: background-color 0.2s ease, transform 0.1s ease;
       }
-      
+
       button:hover {
         background-color: var(--hover-color);
-        transform: translateY(-2px); /* Hiệu ứng nhấc nhẹ khi hover */
+        transform: translateY(-2px);
       }
-      
+
       p {
         font-size: 15px;
         margin: 10px 0;
         color: #666;
       }
-      
+
       p strong {
         color: #333;
       }
-      
-      /* Responsive adjustments */
+
       @media (max-width: 768px) {
         .container {
-          grid-template-columns: 1fr; /* Chuyển sang 1 cột trên màn hình nhỏ hơn */
+          grid-template-columns: 1fr;
           padding: 20px;
         }
-      
+
         header {
           padding: 10px 20px;
         }
-      
+
         .header-content {
-          flex-direction: column; /* Stack logo và nav trên màn hình nhỏ */
+          flex-direction: column;
           gap: 15px;
         }
-      
+
         nav ul {
-          flex-direction: column; /* Stack nav items */
+          flex-direction: column;
           gap: 10px;
           align-items: center;
         }
-      
+
         .logo-text {
           font-size: 30px;
         }
-      
+
         h2 {
           font-size: 26px;
           margin-top: 20px;
           margin-bottom: 20px;
         }
-      
+
         .card {
           padding: 25px;
-          min-height: unset; /* Bỏ min-height trên mobile */
+          min-height: unset;
         }
-      
+
         .card h3 {
           font-size: 20px;
         }
-      
+
         select,
         input[type='file'],
         button {
@@ -271,7 +270,6 @@
           </select>
         </div>
         <button onclick="batDauPhongVan()">Bắt đầu phỏng vấn</button>
-        <!-- <button onclick="alert('Bắt đầu phỏng vấn!')">Bắt đầu phỏng vấn</button> -->
       </div>
 
       <div class="card">
@@ -300,47 +298,41 @@
       <div class="card">
         <div>
           <h3>Xem phản hồi và tiến độ</h3>
-          <p>
-            Số lần phỏng vấn thử: <strong>3</strong>
-          </p>
-          <p>
-            Điểm bài Test: <strong>85/100</strong>
-          </p>
-          <p>
-            Mức độ phù hợp: <strong>Phù hợp cao</strong>
-          </p>
+          <p>Số lần phỏng vấn thử: <strong>3</strong></p>
+          <p>Điểm bài Test: <strong>85/100</strong></p>
+          <p>Mức độ phù hợp: <strong>Phù hợp cao</strong></p>
         </div>
         <button onclick="alert('Xem chi tiết tiến độ')">Xem chi tiết</button>
       </div>
     </div>
 
     <script>
-      const tenNguoiDung = localStorage.getItem('username') || null
-      const usernameSpan = document.getElementById('username')
-      
+      const tenNguoiDung = localStorage.getItem('username') || null;
+      const usernameSpan = document.getElementById('username');
+
       if (tenNguoiDung) {
-        usernameSpan.textContent = tenNguoiDung
+        usernameSpan.textContent = tenNguoiDung;
       } else {
-        usernameSpan.textContent = '(Chưa đăng nhập)'
+        usernameSpan.textContent = '(Chưa đăng nhập)';
       }
-      
+
       function redirectToUser() {
         if (tenNguoiDung) {
-          window.location.href = 'user'
+          window.location.href = '../user'
         } else {
-          window.location.href = 'login'
+          window.location.href = '../templates/login'
         }
       }
+
       function batDauPhongVan() {
-        // Nếu bạn muốn kiểm tra đăng nhập trước
         if (!tenNguoiDung) {
           alert('Vui lòng đăng nhập để bắt đầu phỏng vấn.')
-          window.location.href = 'login'
+          window.location.href = '../templates/login'
           return
         }
       
         // Nếu đã đăng nhập thì chuyển trang
-        window.location.href = 'pvan'
+        window.location.href = 'chatbot'
       }
     </script>
   </body>
