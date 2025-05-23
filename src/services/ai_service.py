@@ -40,7 +40,10 @@ def chat():
             headers=headers
         )
 
-    return jsonify(response.json()), response.status_code
+        return jsonify(response.json()), response.status_code
+    except Exception as e:
+        # Bắt lỗi và trả về response lỗi
+        return jsonify({"error": str(e)}), 500
 
 @ai_service_bp.route('/save_summary', methods=['POST'])
 def save_summary():
