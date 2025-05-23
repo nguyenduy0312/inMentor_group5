@@ -1,8 +1,6 @@
-
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify,session
 import requests
-
-
+from DAO.cau_hoi_tra_loi_dao import add_question_answer
 
 ai_service_bp = Blueprint('ai_service', __name__)  # Tạo Blueprint cho AI service
 
@@ -10,51 +8,47 @@ API_KEY = "app-b78TsFpOzdbiHxEg5rK5TwSy"
 
 @ai_service_bp.route('/chat', methods=['POST'])
 def chat():
-    try:
-        print("==> Header:", request.headers)
-        print("==> Body:", request.get_data())
+    data = request.json
+    print("==> Dữ liệu nhận được:", data)
+    message_text = data.get('messageText')
+    conversation_id = data.get('conversationId', '')
+    inputs = data.get('inputs', {})
+    phien_id = data.get("phien_id") or session.get("phien_id", None)  # Lấy phien_id từ session
+    print(f"[LOG] phien_id dùng để lưu: {phien_id}")
+    payload = {
+        "query": message_text,
+        "inputs": inputs,
+        "response_mode": "blocking",
+        "conversation_id": conversation_id,
+        "user": "abc-123",
+        "files": []
+    }
 
-        data = request.json
-        message_text = data.get('messageText')
-        conversation_id = data.get('conversationId', '')
-        inputs = data.get('inputs', {})
-        ma_phien = data.get('phienId')
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
 
-        if not message_text:
-            return jsonify({"error": "Thiếu messageText"}), 400
+    response = requests.post(
+        "https://api.dify.ai/v1/chat-messages",
+        json=payload,
+        headers=headers
+    )
+    response_json = response.json()
+    # ✅ Lưu câu hỏi - trả lời nếu có phien_id và không phải "bắt đầu"
+    if phien_id and message_text and message_text.strip().lower() != "bắt đầu":
+        ai_question = response_json.get("answer", "")
+        user_answer = message_text
+        if ai_question:
+            try:
+                # Lưu câu hỏi của AI
+                add_question_answer(phien_id, ai_question, None)
+                # Lưu câu trả lời của người dùng
+                add_question_answer(phien_id, None, user_answer)
+            except Exception as e:
+                print("Lỗi khi lưu vào DB:", e)
 
-        payload = {
-            "query": message_text,
-            "inputs": inputs,
-            "response_mode": "blocking",
-            "conversation_id": conversation_id,
-            "user": "abc-123",
-            "files": []
-        }
-
-
-        headers = {
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json"
-        }
-
-        response = requests.post(
-            "https://api.dify.ai/v1/chat-messages",
-            json=payload,
-            headers=headers
-        )
-
-        if response.status_code != 200:
-            print("==> Lỗi từ Dify:", response.text)
-            return jsonify({"error": "Dify trả về lỗi"}), response.status_code
-
-        return jsonify(response.json()), 200
-
-    except Exception as e:
-        print("==> Lỗi xử lý request:", str(e))
-        return jsonify({"error": "Lỗi xử lý server"}), 500
-
-    
+    return jsonify(response_json), response.status_code
 
 @ai_service_bp.route('/save_summary', methods=['POST'])
 def save_summary():
@@ -63,4 +57,3 @@ def save_summary():
     session['strengths'] = data.get('strengths', '')
     session['weaknesses'] = data.get('weaknesses', '')
     return jsonify({"message": "Đã lưu đánh giá tổng quan!"}), 200
-

@@ -3,6 +3,7 @@ from DataBase.connectdb import create_connection
 
 # Thêm câu hỏi và trả lời vào một phiên
 def add_question_answer(ma_phien, cau_hoi, tra_loi):
+    print(f"[LOG] Thêm vào DB: Ma_Phiên={ma_phien}, Cau_Hoi={cau_hoi}, Tra_Loi={tra_loi}")
     conn = create_connection()
     cursor = conn.cursor()
 

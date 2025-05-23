@@ -123,64 +123,15 @@
         <div class="account" onclick="toggleDropdown()">
           <span style="cursor:pointer;">Tài khoản</span>
           <div class="dropdown" id="accountDropdown">
-<<<<<<< HEAD
-            <a href="use.html">Thông tin tài khoản</a>
-            <a href="trangchu.html">Đăng xuất</a>
-=======
             <a href="{{ url_for('login_bp.profile') }}">Thông tin tài khoản</a>
             <a href="{{ url_for('login_bp.logout') }}">Đăng xuất</a>
->>>>>>> f53816ac4a968165258fa3476fb2cdc2b5f29a17
           </div>
         </div>
       </div>
     </header>
 
     <div class="container">
-<<<<<<< HEAD
       <h2>THÔNG TIN</h2>
-      <img src="default-avatar.png" id="avatar" class="profile-img" alt="Ảnh đại diện" />
-      <input type="file" id="avatarInput" style="display:none;" accept="image/*" />
-      <div class="info-group">
-        <label>Họ tên</label>
-        <input type="text" id="fullname" value="Châu Khánh Ly" disabled />
-      </div>
-      <div class="info-group">
-        <label>Email</label>
-        <input type="email" id="email" value="23020682@vnu.edu.vn" disabled />
-      </div>
-      <div class="info-group">
-        <label>Ngày sinh</label>
-        <input type="date" id="dob" value="2005-09-22" disabled />
-      </div>
-      <div class="info-group">
-        <label>Số điện thoại</label>
-        <input type="text" id="phone" value="0368832366" disabled />
-      </div>
-      <div class="info-group">
-        <label>Quốc gia</label>
-        <input type="text" id="country" value="Việt Nam" disabled />
-      </div>
-      <div class="info-group">
-        <label>Tỉnh</label>
-        <input type="text" id="province" value="Tuyên Quang" disabled />
-      </div>
-      <div class="info-group">
-        <label>Quận/Huyện</label>
-        <input type="text" id="district" value="Huyện Lâm Bình" disabled />
-      </div>
-      <div class="info-group">
-        <label>File CV:</label>
-        <a href="cv_user.pdf" target="_blank">Xem CV đã tải lên</a>
-      </div>
-
-      <div class="actions">
-        <button onclick="analyzeCV()">Phân tích CV</button>
-        <button onclick="toggleEdit()">Cập nhật</button>
-      </div>
-    </div>
-
-=======
-  <h2>THÔNG TIN</h2>
 
   {% if user.Picture %}
     <img src="data:image/jpeg;base64,{{ user.Picture }}" id="avatar" class="profile-img" alt="Ảnh đại diện">
@@ -245,7 +196,6 @@
       </div>
     </div>
 
->>>>>>> f53816ac4a968165258fa3476fb2cdc2b5f29a17
     <script>
       function toggleEdit() {
         const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="date"]')
@@ -328,8 +278,5 @@
       })
     </script>
   </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> f53816ac4a968165258fa3476fb2cdc2b5f29a17
+

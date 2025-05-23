@@ -10,6 +10,7 @@ endButton.addEventListener("click", function () {
   window.location.href = "trangchu"; // hoặc "trangchu.html" tùy theo cấu trúc
 });
 
+let conversationId = "";
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -109,10 +110,11 @@ const careerSelect = document.getElementById("career-select");
 
 careerValue = careerSelect.value;
 
-let conversationId = ""; // Biến toàn cục lưu conversation_id
+
 
 
 async function sendMessageToDify(messageText, careerValue ) {
+  let phienId = localStorage.getItem('interview_id'); // Lấy lại mỗi lần gửi
   try {
     const response = await fetch("http://127.0.0.1:5000/api/chat", {
       method: "POST",
@@ -122,7 +124,8 @@ async function sendMessageToDify(messageText, careerValue ) {
       body: JSON.stringify({
         messageText,
         conversationId,
-        inputs: { "abc": careerValue }  
+        inputs: { "abc": careerValue },  
+        phien_id: phienId,
       }),
     });
 
@@ -134,38 +137,24 @@ async function sendMessageToDify(messageText, careerValue ) {
     if (data.conversation_id) {
       conversationId = data.conversation_id;
     }
+
+    // ✅ Gửi cặp câu hỏi – trả lời về backend để lưu
+if (messageText.trim().toLowerCase() !== "bắt đầu") {
+  fetch("/api/luu_cau_tra_loi", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      phien_id: phienId,
+      cau_hoi: messageText,
+      cau_tra_loi: data.answer || data.choices?.[0]?.message?.content || ""
+    }),
+  });
+}
+
     return data.answer || data.choices?.[0]?.message?.content || "Không có phản hồi từ AI.";
   } catch (error) {
     console.error("Lỗi gửi tin nhắn đến service:", error);
     return "Đã xảy ra lỗi khi kết nối với service.";
-  }
-}
-
-
-// Lưu câu hỏi và câu trả lời vào cơ sở dữ liệu
-async function saveQuestionAnswer(phienId, question, answer) {
-  try {
-    const response = await fetch("http://127.0.0.1:5000/api/cauhoitraloi", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        phien_id: phienId,
-        questions_answers: [
-          { question: question, answer: answer }
-        ],
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("Lưu Q&A thành công:", data);
-  } catch (error) {
-    console.error("Lỗi lưu Q&A:", error);
   }
 }
 
@@ -185,5 +174,3 @@ function parseSummary(summaryText) {
     weaknesses: weaknessesMatch ? weaknessesMatch[1].replace(/^- /gm, '').trim() : ""
   };
 }
-
-

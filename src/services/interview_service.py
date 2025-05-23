@@ -15,7 +15,8 @@ def handle_save_qa(phien_id, qa_list):
     for qa in qa_list:
         cau_hoi = qa.get('question')
         tra_loi = qa.get('answer')
-        add_question_answer(phien_id, cau_hoi, tra_loi)  # Gọi DAO lưu từng Q&A
+        add_question_answer(phien_id, cau_hoi, None)      # Lưu câu hỏi của AI
+        add_question_answer(phien_id, None, tra_loi)
 
 # Hàm xử lý lưu đánh giá và điểm số AI vào DB
 def handle_save_evaluation(phien_id, danhgia, diemso):
