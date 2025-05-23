@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kết quả đánh giá ứng viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100 text-gray-800 font-sans p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Kết quả đánh giá ứng viên</h2>
+        <button onclick="window.location.href='/trangchu'" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition-all duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-lg active:scale-95">Quay về trang chủ</button>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">📊 Điểm số tổng quan</h3>
+        <div class="text-4xl font-bold text-blue-600">{{ score }}/100</div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h3 class="text-lg font-semibold text-green-700">✅ Điểm mạnh</h3>
+          <ul class="list-disc list-inside mt-2">
+            {% for s in strengths.split('\n') %}
+              <li>{{ s }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-yellow-600">⚠️ Điểm hạn chế</h3>
+          <ul class="list-disc list-inside mt-2">
+            {% for w in weaknesses.split('\n') %}
+              <li>{{ w }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      {% if general_comment %}
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold text-gray-700">📝 Nhận xét chung</h3>
+          <p class="mt-2">{{ general_comment }}</p>
+        </div>
+      {% endif %}
+
+      {% if recommendations %}
+        <div>
+          <h3 class="text-lg font-semibold text-indigo-700">🚀 Đề xuất phát triển</h3>
+          <ul class="list-disc list-inside mt-2">
+            {% for rec in recommendations.split('\n') %}
+              <li>{{ rec }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+    <script src="../static/JS/scriptchatbot.js"></script>
+  </body>
+</html>

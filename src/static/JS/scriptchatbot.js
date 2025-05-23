@@ -28,7 +28,27 @@ form.addEventListener("submit", async function (e) {
   // Truyền careerValue vào hàm gửi
   const aiReply = await sendMessageToDify(userMessage, careerValue);
   typeText("ai", aiReply, () => toggleSendButton(false));
+  // Kiểm tra nếu là đánh giá tổng quan thì tách và gửi về backend
+ if (
+  aiReply.includes("ĐÁNH GIÁ ỨNG VIÊN") ||
+  aiReply.includes("Mức độ phù hợp:")
+) {
+  const parsed = parseSummary(aiReply);
+  console.log(parsed); // Xem kết quả tách
+
+  if (parsed.score) {
+    fetch("/api/save_summary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(parsed)
+    }).then(() => {
+      window.location.href = "/summary";
+    });
+  }
+}
 });
+
+
 
 function appendMessage(sender, text) {
   const messageEl = document.createElement("div");
@@ -121,30 +141,20 @@ async function sendMessageToDify(messageText, careerValue ) {
   }
 }
 
+function parseSummary(summaryText) {
+  // Lấy điểm số
+  const scoreMatch = summaryText.match(/\*\*Mức độ phù hợp:\*\*\s*(\d+)\/100/);
 
-// Lưu câu hỏi và câu trả lời vào cơ sở dữ liệu
-async function saveQuestionAnswer(phienId, question, answer) {
-  try {
-    const response = await fetch("http://127.0.0.1:5000/api/cauhoitraloi", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        phien_id: phienId,
-        questions_answers: [
-          { question: question, answer: answer }
-        ],
-      }),
-    });
+  // Lấy điểm mạnh
+  const strengthsMatch = summaryText.match(/\*\*Ưu điểm nổi bật:\*\*([\s\S]*?)\*\*Hạn chế cần cải thiện:\*\*/);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+  // Lấy điểm hạn chế
+  const weaknessesMatch = summaryText.match(/\*\*Hạn chế cần cải thiện:\*\*([\s\S]*?)\*\*Đề xuất tiếp theo:\*\*/);
 
-    const data = await response.json();
-    console.log("Lưu Q&A thành công:", data);
-  } catch (error) {
-    console.error("Lỗi lưu Q&A:", error);
-  }
+  return {
+    score: scoreMatch ? scoreMatch[1] : "",
+    strengths: strengthsMatch ? strengthsMatch[1].replace(/^- /gm, '').trim() : "",
+    weaknesses: weaknessesMatch ? weaknessesMatch[1].replace(/^- /gm, '').trim() : ""
+  };
 }
+
