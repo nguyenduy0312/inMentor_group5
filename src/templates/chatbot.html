@@ -1,28 +1,63 @@
-import time
-import pytest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat inMentor</title>
+    <link rel="stylesheet" href="../static/CSS/stylechatbot.css" />
+  </head>
+  <body>
+    <div class="header-bar">
+      <div class="logo-text">
+        in<span>Mentor</span>
+      </div>
+      <nav class="nav-links" style="display: flex; gap: 20px; align-items: center;">
+        <a href="trangchu">Trang chủ</a>
+        <a href="trangweb">Về chúng tôi</a>
+        <a href="pvan">Phỏng vấn AI</a>
+        <a href="dsvieclam">Danh sách việc làm</a>
+        <a href="feedback">Feedback</a>
 
-@pytest.fixture
-def driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")  # không mở cửa sổ trình duyệt
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    yield driver
-    driver.quit()
+        <div class="account" onclick="toggleDropdown()" style="position: relative; cursor: pointer; user-select: none;">
+          <span>Tài khoản</span>
+          <div class="dropdown" id="accountDropdown" style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.15); min-width: 150px; z-index: 100;">
+            <a href="use" style="display: block; padding: 12px 12px; text-decoration: none; color: #333;">Thông tin tài khoản</a>
+            <a href="trangchu" style="display: block; padding: 12px 12px; text-decoration: none; color: #333;">Đăng xuất</a>
+          </div>
+        </div>
+      </nav>
+    </div>
 
-def test_chatbot_page_loads(driver):
-    driver.get("http://localhost:5000/chatbot")
-    
-    # Kiểm tra tiêu đề hoặc 1 phần tử đặc trưng
-    assert "Chatbot" in driver.page_source  # hoặc kiểm tra title nếu có
+  <div class="career-select-wrapper" style="text-align: center; margin: 20px 0;">
+    <label for="career-select" style="font-weight: bold; margin-right: 10px;">Chọn lĩnh vực nghề nghiệp:</label>
+    <select id="career-select" name="career">
+      <option value="backend java">Backend - Java</option>
+      <option value="frontend">Frontend</option>
+      <option value="data analyst">Data Analyst</option>
+      <option value="full stack">Fullstack</option>
+      <option value="bussiness analyst">Bussiness Analyst</option>
+    </select>
+  </div>
 
-    # Giả sử bạn có ô nhập chat có id="chat-input"
-    chat_input = driver.find_element(By.ID, "chat-input")
-    assert chat_input.is_displayed()
+    <div class="chat-container">
+      <div class="chat-box" id="chat-box">
+        <div class="chat-start" id="chat-start">
+          <div>Bắt đầu</div>
+          <small id="loading-text">Đang tải dữ liệu...</small>
+        </div>
+      </div>
 
-    # Kiểm tra nút gửi nếu có
-    send_button = driver.find_element(By.ID, "send-button")
-    assert send_button.is_displayed()
+      <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Nhập tin nhắn..." autocomplete="off" required />
+        <button type="submit" id="send-button">Gửi</button>
+      </form>
+      <button id="end-button" style="display: none; margin-top: 20px;">Kết thúc</button>
+    </div>
+
+    <script>
+    const phien_id = "{{ phien_id }}";
+    </script>
+    <script src="../static/JS/scriptchatbot.js"></script>
+  </body>
+</html>
+

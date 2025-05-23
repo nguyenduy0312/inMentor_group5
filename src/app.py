@@ -31,7 +31,7 @@ app.register_blueprint(ai_service_bp, url_prefix="/api")
 
 @app.route('/trangchu')
 def index():
-    return redirect('/trangchu.html')
+    return redirect('/trangchu')
 
 
 if __name__ == '__main__':

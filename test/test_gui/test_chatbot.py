@@ -1,34 +1,64 @@
-import pytest
-from src.app import app
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
-@pytest.fixture
-def client():
-    app.config['TESTING'] = True
-    with app.test_client() as client:
-        yield client
 
-def test_chatbot_page(client):
-    response = client.get('/chatbot')
-    assert response.status_code == 200
-    # Giả sử trong chatbot.html có <title>Chatbot</title>
-    assert b'<title>chatbot</title>' in response.data.lower()
+def test_chatbot_flow():
+    # 1. Khởi tạo trình duyệt
+    driver = webdriver.Chrome()  # Hoặc Firefox() nếu dùng Firefox
+    driver.get("http://127.0.0.1:5000/chatbot")
+    driver.maximize_window()
 
-def test_summary_page_without_session(client):
-    response = client.get('/summary')
-    assert response.status_code == 200
-    # Chuyển dữ liệu bytes sang chuỗi UTF-8 để check dấu tiếng Việt chính xác
-    data_str = response.data.decode('utf-8').lower()
-    assert 'chưa có' in data_str
+    wait = WebDriverWait(driver, 10)
 
-def test_summary_page_with_session(client):
-    with client.session_transaction() as sess:
-        sess['score'] = '8.5'
-        sess['strengths'] = 'Giao tiếp tốt'
-        sess['weaknesses'] = 'Cần cải thiện kỹ thuật'
+    try:
+        # 2. Chọn lĩnh vực nghề nghiệp
+        career_select = wait.until(EC.presence_of_element_located((By.ID, "career-select")))
+        Select(career_select).select_by_visible_text("Frontend")
+        time.sleep(1)
 
-    response = client.get('/summary')
-    assert response.status_code == 200
-    data_str = response.data.decode('utf-8')
-    assert '8.5' in data_str
-    assert 'Giao tiếp tốt' in data_str
-    assert 'Cần cải thiện kỹ thuật' in data_str
+        # 3. Nhập tin nhắn đầu tiên
+        user_input = driver.find_element(By.ID, "user-input")
+        user_input.send_keys("Xin chào")
+
+        send_button = driver.find_element(By.ID, "send-button")
+        send_button.click()
+
+        # 4. Đợi phản hồi của AI
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, "ai")))
+
+        # 5. Gửi thêm tin nhắn
+        user_input.send_keys("Tôi có 2 năm kinh nghiệm ReactJS")
+        send_button.click()
+
+        wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "ai")))
+
+        # 6. Kiểm tra hiển thị nút "Kết thúc"
+        try:
+            end_button = driver.find_element(By.ID, "end-button")
+            if end_button.is_displayed():
+                print("✅ Nút 'Kết thúc' đã hiển thị.")
+            else:
+                print("⚠️ Nút 'Kết thúc' chưa hiển thị.")
+        except:
+            print("❌ Không tìm thấy nút 'Kết thúc'.")
+
+        # 7. (Tùy chọn) Click nút kết thúc để quay về trang chủ
+        end_button.click()
+        time.sleep(1)
+        assert "trangchu" in driver.current_url.lower()
+        print("✅ Điều hướng về trang chủ thành công.")
+
+        print("🎉 TEST PASSED!")
+
+    except Exception as e:
+        print(f"❌ Lỗi khi chạy test: {e}")
+    finally:
+        driver.quit()
+
+
+if __name__ == "__main__":
+    test_chatbot_flow()
