@@ -31,6 +31,29 @@ CREATE TABLE IF NOT EXISTS `inmentor`.`user` (
   UNIQUE INDEX `Email` (`Email` ASC) VISIBLE,
   UNIQUE INDEX `TenDangNhap` (`TenDangNhap` ASC) VISIBLE);
 
+ALTER TABLE user
+ADD COLUMN skills text;
+
+UPDATE user
+SET skills = 'HTML, CSS, JavaScript'
+WHERE Ma_Nguoi_Dung = 1;
+
+UPDATE user
+SET skills = 'Python, Flask, SQL'
+WHERE Ma_Nguoi_Dung = 2;
+
+UPDATE user
+SET skills = 'Java, Spring Boot, Docker'
+WHERE Ma_Nguoi_Dung = 3;
+
+UPDATE user
+SET Picture = LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/avt1.jpg')
+WHERE Email = 'duyhy0312@gmail.com';
+
+SELECT LENGTH(Picture) FROM user WHERE Email = 'duyhy0312@gmail.com';
+SHOW VARIABLES LIKE 'secure_file_priv';
+
+SELECT LOAD_FILE('C:\Users\admin\OneDrive\Desktop\Công nghệ phần mềm\inMentor\inMentor_group5\src\static\Images\avt1.jpg');
 
 
 -- -----------------------------------------------------

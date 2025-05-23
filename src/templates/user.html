@@ -117,55 +117,39 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">inMentor</div>
-    <ul>
-      <li><a href="trangchu">Trang chủ</a></li>
-      <li><a href="trangweb">Về chúng tôi</a></li>
-      <li><a href="pvan">Phỏng vấn AI</a></li>
-      <li><a href="dsvieclam">Danh sách việc làm</a></li>
-      <li><a href="#">Feedback</a></li>
-      <li id="accountMenu">
-        <a href="use" id="accountLink">Tài khoản</a>
-        <ul class="dropdown" id="accountDropdown">
-          <li><a href="#">Thông tin cá nhân</a></li>
-          <li><a href="#">Đăng xuất</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">inMentor</div>
+  <ul>
+    <li><a href="/trangchu">Trang chủ</a></li>
+    <li><a href="/trangweb">Về chúng tôi</a></li>
+    <li><a href="/pvan">Phỏng vấn AI</a></li>
+    <li><a href="/dsvieclam">Danh sách việc làm</a></li>
+    <li><a href="#">Feedback</a></li>
+    <li>
+      <a href="/use">Tài khoản</a>
+      <ul class="dropdown">
+        <li><a href="/profile">Thông tin cá nhân</a></li>
+        <li><a href="/logout">Đăng xuất</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
-  <!-- Profile Section -->
-  <div class="profile-container" id="profileSection" style="display: none;">
-    <img src="https://via.placeholder.com/120" alt="Ảnh đại diện">
-    <h2>Nguyễn Văn A</h2>
-    <p><strong>Email:</strong> nguyenvana@example.com</p>
-    <p><strong>Điện thoại:</strong> 0987 654 321</p>
-    <p><strong>Vị trí:</strong> Hà Nội, Việt Nam</p>
-    <p><strong>Kỹ năng:</strong> HTML, CSS, JavaScript</p>
-    <p><strong>Mô tả:</strong> Tôi là một lập trình viên đam mê với công nghệ và phát triển web.</p>
-    <button class="edit-btn">Chỉnh sửa thông tin</button>
-  </div>
-
-  <script>
-    // Giả lập trạng thái đăng nhập từ localStorage
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    const accountLink = document.getElementById("accountLink");
-    const dropdownMenu = document.getElementById("accountDropdown");
-    const profileSection = document.getElementById("profileSection");
-
-    if (!isLoggedIn) {
-      dropdownMenu.style.display = "none";
-      accountLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.href = "login"; // Chuyển hướng đến trang đăng nhập
-      });
-    } else {
-      // Nếu đã đăng nhập thì hiện thông tin người dùng
-      profileSection.style.display = "block";
-    }
-  </script>
+<!-- Profile Section -->
+<div class="profile-container">
+  {% if user.Picture %}
+    <img src="data:image/jpeg;base64,{{ user.Picture }}" alt="Ảnh đại diện">
+  {% else %}
+    <img src="https://via.placeholder.com/120s" alt="Ảnh đại diện">
+  {% endif %}
+  <h2>{{ user.Ho_Ten }}</h2>
+  <p><strong>Email:</strong> {{ user.Email }}</p>
+  <p><strong>Điện thoại:</strong> {{ user.SoDienThoai }}</p>
+  <p><strong>Kỹ năng:</strong> {{ user.skills }}</p>
+  <p><strong>Mô tả:</strong> {{ user.MoTa }}</p>
+  <button class="edit-btn">Chỉnh sửa thông tin</button>
+</div>
 
 </body>
 </html>
