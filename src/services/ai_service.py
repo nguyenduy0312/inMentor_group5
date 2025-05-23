@@ -1,13 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify,session
 import requests
-from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)
+ai_service_bp = Blueprint('ai_service', __name__)  # Tạo Blueprint cho AI service
 
 API_KEY = "app-b78TsFpOzdbiHxEg5rK5TwSy"
 
-@app.route('/chat', methods=['POST'])
+@ai_service_bp.route('/chat', methods=['POST'])
 def chat():
     data = request.json
     message_text = data.get('messageText')
@@ -35,5 +33,10 @@ def chat():
 
     return jsonify(response.json()), response.status_code
 
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+@ai_service_bp.route('/save_summary', methods=['POST'])
+def save_summary():
+    data = request.json
+    session['score'] = data.get('score', '')
+    session['strengths'] = data.get('strengths', '')
+    session['weaknesses'] = data.get('weaknesses', '')
+    return jsonify({"message": "Đã lưu đánh giá tổng quan!"}), 200

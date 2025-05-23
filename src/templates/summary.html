@@ -1,0 +1,18 @@
+<body>
+  <h2>Kết quả đánh giá ứng viên</h2>
+  <div><strong>Điểm số tổng quan:</strong> {{ score }}/100</div>
+  <div><strong>Điểm mạnh:</strong>
+    <ul>
+      {% for s in strengths.split('\n') %}
+        <li>{{ s }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div><strong>Điểm hạn chế:</strong>
+    <ul>
+      {% for w in weaknesses.split('\n') %}
+        <li>{{ w }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
