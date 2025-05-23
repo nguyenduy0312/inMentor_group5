@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, session
 from services.interview_service import handle_create_session, handle_save_qa, handle_save_evaluation
-
+from DAO.cau_hoi_tra_loi_dao import add_question_answer
 interview_bp = Blueprint('interview', __name__)
 
 @interview_bp.route('/phongvan', methods=['POST'])
@@ -25,8 +25,6 @@ def luu_cau_tra_loi():
     if cau_hoi and cau_hoi.strip().lower() == "bắt đầu":
         print("Không lưu vào DB vì là 'bắt đầu'")
         return jsonify({"message": "Không lưu câu bắt đầu"}), 200
-
-    from DAO.cau_hoi_tra_loi_dao import add_question_answer
     add_question_answer(phien_id, cau_hoi, None)      # Lưu câu hỏi của AI
     add_question_answer(phien_id, None, cau_tra_loi)  # Lưu trả lời của người dùng
     return jsonify({"message": "Đã lưu thành công"}), 200
