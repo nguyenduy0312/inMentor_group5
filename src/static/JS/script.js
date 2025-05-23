@@ -48,3 +48,40 @@ document.getElementById('skill-select').addEventListener('change', function() {
       window.location.href = url;
     }
 });
+
+// Lấy username từ localStorage
+function getUsername() {
+  return localStorage.getItem('username') || null;
+}
+
+function updateUsernameDisplay() {
+  const tenNguoiDung = getUsername();
+  const usernameSpan = document.getElementById('username');
+  if (tenNguoiDung) {
+    usernameSpan.textContent = tenNguoiDung;
+  } else {
+    usernameSpan.textContent = '(Chưa đăng nhập)';
+  }
+}
+
+// Gọi update để hiển thị username khi tải trang
+updateUsernameDisplay();
+
+function redirectToUser() {
+  const tenNguoiDung = getUsername();
+  if (tenNguoiDung) {
+    window.location.href = '/user';
+  } else {
+    window.location.href = '/login';
+  }
+}
+
+function batDauPhongVan() {
+  const tenNguoiDung = getUsername();
+  if (!tenNguoiDung) {
+    alert('Vui lòng đăng nhập để bắt đầu phỏng vấn.');
+    window.location.href = '/login';
+    return;
+  }
+  window.location.href = '/pvan';
+}

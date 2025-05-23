@@ -32,22 +32,24 @@
                 <div class="chi-ti-t">Quay lại</div>
               </button>
             </a>
-            <a href="cv">
-              <button class="ti-CV">
-                <div class="chi-ti-t">Tải CV</div>
-              </button>
-            </a>
-            <a href="chatbot">
-              <button class="phng-vn-o">
-                <div class="chi-ti-t">Phỏng vấn ảo</div>
-              </button>
-            </a>
+
+            <!-- Nút Tải CV và Phỏng vấn ảo không còn dùng <a> để kiểm soát logic JS -->
+            <button id="btn-tai-cv" class="ti-CV">
+              <div class="chi-ti-t">Tải CV</div>
+            </button>
+            <button id="btn-phong-van" class="phng-vn-o">
+              <div class="chi-ti-t">Phỏng vấn ảo</div>
+            </button>
           </div>
+
+          <!-- Input file ẩn để chọn file CV -->
+          <input type="file" id="input-cv-file" accept=".pdf,.doc,.docx" style="display:none" />
         </div>
       </div>
     </div>
 
     <script>
+      // Dữ liệu công việc mẫu
       const jobs = [
         {
           id: 1,
@@ -111,9 +113,9 @@
             >
           `
         }
-        // Bạn có thể thêm công việc mới vào đây theo cấu trúc trên
       ];
 
+      // Lấy thông tin job theo id từ query string
       const urlParams = new URLSearchParams(window.location.search);
       const jobId = parseInt(urlParams.get("id"));
       const job = jobs.find(j => j.id === jobId);
@@ -128,6 +130,75 @@
       } else {
         document.querySelector(".frame").innerHTML = "<h2 style='color:red'>Không tìm thấy công việc</h2>";
       }
+
+      // --- Xử lý đăng nhập & nút ---
+      const btnTaiCV = document.getElementById("btn-tai-cv");
+      const btnPhongVan = document.getElementById("btn-phong-van");
+      const inputCvFile = document.getElementById("input-cv-file");
+
+      // Giả lập trạng thái đăng nhập
+      // Bạn thay đoạn này bằng kiểm tra đăng nhập thật (cookie, localStorage, API...)
+      let isLoggedIn = false; // false = chưa đăng nhập, true = đã đăng nhập
+
+      btnTaiCV.addEventListener("click", () => {
+        if (!isLoggedIn) {
+          alert("Bạn chưa đăng nhập. Vui lòng đăng nhập để tải CV.");
+          window.location.href = "login.html"; // Thay bằng trang login thật của bạn
+        } else {
+          inputCvFile.value = ""; // reset để có thể chọn lại file cũ
+          inputCvFile.click();
+        }
+      });
+
+      inputCvFile.addEventListener("change", () => {
+        const file = inputCvFile.files[0];
+        if (!file) return;
+
+        const allowedTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+          alert("Vui lòng chọn file định dạng PDF hoặc DOC/DOCX.");
+          inputCvFile.value = "";
+          return;
+        }
+
+        uploadCV(file);
+      });
+
+      function uploadCV(file) {
+        const formData = new FormData();
+        formData.append("cv", file);
+
+        fetch("/api/upload-cv", {
+          method: "POST",
+          body: formData,
+          credentials: "include" // nếu có cookie xác thực
+        })
+          .then(res => {
+            if (!res.ok) throw new Error("Upload thất bại");
+            return res.json();
+          })
+          .then(data => {
+            alert("Tải CV thành công!");
+            // Xử lý sau upload nếu cần, ví dụ cập nhật UI
+          })
+          .catch(err => {
+            alert(err.message);
+          });
+      }
+
+      btnPhongVan.addEventListener("click", () => {
+        if (!isLoggedIn) {
+          alert("Bạn chưa đăng nhập. Vui lòng đăng nhập để phỏng vấn ảo.");
+          window.location.href = "login.html";
+        } else {
+          window.location.href = "chatbot.html";
+        }
+      });
     </script>
   </body>
 </html>

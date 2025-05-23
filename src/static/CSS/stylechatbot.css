@@ -39,6 +39,32 @@ body {
   transition: color 0.3s;
 }
 
+.nav-links {
+  display: flex;
+  gap: 20px; /* Khoảng cách đều */
+  align-items: center;
+  font-weight: 600;
+}
+.account {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  margin-left: 12px;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  min-width: 150px;
+  z-index: 100;
+}
+
+
 .nav-links a:hover {
   color: #2b63d9;
 }

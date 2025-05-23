@@ -4,6 +4,12 @@ const input = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
 const sendButton = document.getElementById("send-button");
 const startSection = document.getElementById("chat-start");
+const endButton = document.getElementById("end-button"); 
+
+endButton.addEventListener("click", function () {
+  window.location.href = "trangchu"; // hoặc "trangchu.html" tùy theo cấu trúc
+});
+
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -66,16 +72,38 @@ function typeText(sender, text, callback) {
       chatBox.scrollTop = chatBox.scrollHeight;
       setTimeout(typing, speed);
     } else {
+      // Khi AI trả lời xong, kiểm tra nếu là câu kết thúc thì hiển thị nút "Kết thúc"
+      if (
+        text.includes("Kết thúc buổi phỏng vấn") ||
+        text.includes("Cảm ơn bạn đã tham gia") ||
+        text.toLowerCase().includes("phỏng vấn kết thúc")
+      ) {
+        endButton.style.display = "block";
+      }
+
       if (callback) callback();
     }
   }
   typing();
 }
 
+
 function toggleSendButton(disabled) {
   sendButton.disabled = disabled;
   sendButton.textContent = disabled ? "Đang gửi..." : "Gửi";
 }
+
+function toggleDropdown() {
+  const dropdown = document.getElementById('accountDropdown')
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'
+}
+
+document.addEventListener('click', function (event) {
+  const dropdown = document.getElementById('accountDropdown')
+  if (!event.target.closest('.account')) {
+    dropdown.style.display = 'none'
+  }
+})
 
 const careerSelect = document.getElementById("career-select");
 
