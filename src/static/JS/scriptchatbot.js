@@ -78,7 +78,7 @@ let conversationId = ""; // Biến toàn cục lưu conversation_id
 
 async function sendMessageToDify(messageText, careerValue ) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/chat", {
+    const response = await fetch("http://127.0.0.1:5000/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,5 +102,33 @@ async function sendMessageToDify(messageText, careerValue ) {
   } catch (error) {
     console.error("Lỗi gửi tin nhắn đến service:", error);
     return "Đã xảy ra lỗi khi kết nối với service.";
+  }
+}
+
+
+// Lưu câu hỏi và câu trả lời vào cơ sở dữ liệu
+async function saveQuestionAnswer(phienId, question, answer) {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/api/cauhoitraloi", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phien_id: phienId,
+        questions_answers: [
+          { question: question, answer: answer }
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Lưu Q&A thành công:", data);
+  } catch (error) {
+    console.error("Lỗi lưu Q&A:", error);
   }
 }

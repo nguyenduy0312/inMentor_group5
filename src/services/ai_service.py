@@ -1,39 +1,54 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 import requests
-from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)
+
+ai_service_bp = Blueprint('ai_service', __name__)  # Tạo Blueprint cho AI service
 
 API_KEY = "app-b78TsFpOzdbiHxEg5rK5TwSy"
 
-@app.route('/chat', methods=['POST'])
+@ai_service_bp.route('/chat', methods=['POST'])
 def chat():
-    data = request.json
-    message_text = data.get('messageText')
-    conversation_id = data.get('conversationId', '')
-    inputs = data.get('inputs', {})
-    payload = {
-        "query": message_text,
-        "inputs": inputs,
-        "response_mode": "blocking",
-        "conversation_id": conversation_id,
-        "user": "abc-123",
-        "files": []
-    }
+    try:
+        print("==> Header:", request.headers)
+        print("==> Body:", request.get_data())
 
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
+        data = request.json
+        message_text = data.get('messageText')
+        conversation_id = data.get('conversationId', '')
+        inputs = data.get('inputs', {})
+        ma_phien = data.get('phienId')
 
-    response = requests.post(
-        "https://api.dify.ai/v1/chat-messages",
-        json=payload,
-        headers=headers
-    )
+        if not message_text:
+            return jsonify({"error": "Thiếu messageText"}), 400
 
-    return jsonify(response.json()), response.status_code
+        payload = {
+            "query": message_text,
+            "inputs": inputs,
+            "response_mode": "blocking",
+            "conversation_id": conversation_id,
+            "user": "abc-123",
+            "files": []
+        }
 
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+        headers = {
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(
+            "https://api.dify.ai/v1/chat-messages",
+            json=payload,
+            headers=headers
+        )
+
+        if response.status_code != 200:
+            print("==> Lỗi từ Dify:", response.text)
+            return jsonify({"error": "Dify trả về lỗi"}), response.status_code
+
+        return jsonify(response.json()), 200
+
+    except Exception as e:
+        print("==> Lỗi xử lý request:", str(e))
+        return jsonify({"error": "Lỗi xử lý server"}), 500
+
+    

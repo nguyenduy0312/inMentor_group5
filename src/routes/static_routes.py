@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, session
+from flask import send_file
+import io
 static_bp = Blueprint('static_bp', __name__)
 
 @static_bp.route('/trangchu')
 def trangchu():
-    return render_template('trangchu.html')
+    return render_template('trangchu.html', email=session.get("email"))
 
 @static_bp.route('/trangweb')
 def trangweb():
@@ -20,4 +21,4 @@ def dsvieclam():
 
 @static_bp.route("/pvan")
 def phong_van():
-    return render_template("pvan.html")  
+    return render_template("pvan.html")
