@@ -40,13 +40,16 @@ def get_session_by_user(ma_nguoi_dung):
     cursor = conn.cursor(dictionary=True)
 
     sql = """
-        SELECT * FROM phien_phong_van
+        SELECT Ma_Phien FROM phien_phong_van
         WHERE Ma_Nguoi_Dung = %s
         ORDER BY Thoi_Gian_Bat_Dau DESC
+        LIMIT 1
     """
     cursor.execute(sql, (ma_nguoi_dung,))
-    result = cursor.fetchall()
+    result = cursor.fetchone()
 
     cursor.close()
     conn.close()
-    return result
+
+    return result["Ma_Phien"] if result else 0
+

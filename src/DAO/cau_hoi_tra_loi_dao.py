@@ -2,7 +2,7 @@ import mysql.connector
 from DataBase.connectdb import create_connection
 
 # Thêm câu hỏi và trả lời vào một phiên
-def add_question_answer(ma_phien, cau_hoi, cau_tra_loi):
+def add_question_answer(ma_phien, cau_hoi, tra_loi):
     conn = create_connection()
     cursor = conn.cursor()
 
@@ -10,7 +10,7 @@ def add_question_answer(ma_phien, cau_hoi, cau_tra_loi):
         INSERT INTO cau_hoi_tra_loi (Ma_Phiên, Cau_Hoi, Tra_Loi)
         VALUES (%s, %s, %s)
     """
-    cursor.execute(sql, (ma_phien, cau_hoi, cau_tra_loi))
+    cursor.execute(sql, (ma_phien, cau_hoi, tra_loi))
     conn.commit()
 
     cursor.close()
