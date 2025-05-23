@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, make_response, render_template, request, redirect, url_for, session, flash
 from DataBase.connectdb import create_connection, close_connection
 import base64
 
@@ -7,7 +7,7 @@ login_bp = Blueprint("login_bp", __name__, template_folder='../../templates')
 # Route trang chủ
 @login_bp.route("/")
 def index():
-    return render_template("trangchu.html", email=session.get("email"))
+    return render_template("trangchu.html", email=session.get("email"),ho_ten=session.get("ho_ten"))
 
 # Route đăng nhập
 @login_bp.route("/login", methods=["GET", "POST"])
@@ -26,6 +26,7 @@ def login():
             saved_password = row[0]
             if password == saved_password:
                 session["email"] = email
+                
                 flash("Đăng nhập thành công!", "success")
                 return redirect(url_for("login_bp.profile"))
             else:
@@ -38,9 +39,10 @@ def login():
 # Route đăng xuất
 @login_bp.route("/logout")
 def logout():
-    session.pop("email", None)
+    session.clear()  # Xóa toàn bộ session
     flash("Đã đăng xuất!", "success")
     return redirect(url_for("login_bp.login"))
+
 
 # Route lấy thông tin người dùng từ cơ sở dữ liệu
 def get_user_from_db(email):
@@ -78,5 +80,8 @@ def profile():
             "skills": "Chưa cập nhật",
             "Picture": "",  # Có thể dùng ảnh mặc định
         }
-
-    return render_template("user.html", user=user_data)
+    response = make_response(render_template("user.html", user=user_data))
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
