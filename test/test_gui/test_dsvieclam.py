@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-def test_job_list_and_interview_button():
+def test_job_flow():
     driver = webdriver.Chrome()
     driver.get("http://127.0.0.1:5000/dsvieclam")  # URL trang danh sách việc làm
     driver.maximize_window()
@@ -66,11 +66,6 @@ def test_job_list_and_interview_button():
     finally:
         driver.quit()
 
-
-if __name__ == "__main__":
-    test_job_list_and_interview_button()
-    
-    import pytest
 
 if __name__ == "__main__":
     pytest.main()
