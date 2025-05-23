@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify
+
+from flask import Blueprint, request, jsonify, session
 import requests
+
 
 
 ai_service_bp = Blueprint('ai_service', __name__)  # Tạo Blueprint cho AI service
@@ -30,6 +32,7 @@ def chat():
             "files": []
         }
 
+
         headers = {
             "Authorization": f"Bearer {API_KEY}",
             "Content-Type": "application/json"
@@ -52,3 +55,12 @@ def chat():
         return jsonify({"error": "Lỗi xử lý server"}), 500
 
     
+
+@ai_service_bp.route('/save_summary', methods=['POST'])
+def save_summary():
+    data = request.json
+    session['score'] = data.get('score', '')
+    session['strengths'] = data.get('strengths', '')
+    session['weaknesses'] = data.get('weaknesses', '')
+    return jsonify({"message": "Đã lưu đánh giá tổng quan!"}), 200
+
