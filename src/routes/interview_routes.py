@@ -22,9 +22,7 @@ def luu_cau_tra_loi():
     if not phien_id or not cau_hoi or not cau_tra_loi:
         return jsonify({"error": "Thiếu dữ liệu"}), 400
     print("DEBUG cau_hoi:", repr(cau_hoi), "strip:", repr(cau_hoi.strip().lower()))
-    if cau_hoi and cau_hoi.strip().lower() == "bắt đầu":
-        print("Không lưu vào DB vì là 'bắt đầu'")
-        return jsonify({"message": "Không lưu câu bắt đầu"}), 200
+    # Gọi service lưu câu hỏi - trả lời
     add_question_answer(phien_id, cau_hoi, None)      # Lưu câu hỏi của AI
     add_question_answer(phien_id, None, cau_tra_loi)  # Lưu trả lời của người dùng
     return jsonify({"message": "Đã lưu thành công"}), 200

@@ -29,7 +29,7 @@ app.register_blueprint(login_bp)
 app.register_blueprint(static_bp)
 app.register_blueprint(ai_service_bp, url_prefix="/api")
 
-@app.route('/')
+@app.route('/trangchu')
 def index():
     return redirect('/trangchu')
 

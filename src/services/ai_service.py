@@ -36,7 +36,7 @@ def chat():
     )
     response_json = response.json()
     # ✅ Lưu câu hỏi - trả lời nếu có phien_id và không phải "bắt đầu"
-    if phien_id and message_text and message_text.strip().lower() != "bắt đầu":
+    if phien_id :
         ai_question = response_json.get("answer", "")
         user_answer = message_text
         if ai_question:

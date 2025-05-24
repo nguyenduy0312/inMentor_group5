@@ -69,7 +69,7 @@ body {
   color: #2b63d9;
 }
 
-/* Dropdown chọn nghề nghiệp */
+/* Dropdown chọn nghề nghiệp 
 .career-select-wrapper {
   /*max-width: 900px;
   width: 100%;
@@ -79,7 +79,6 @@ body {
   justify-content: center;
   gap: 12px;
   font-size: 16px;*/
-}
 
 .career-select-wrapper label {
   font-weight: 500;
