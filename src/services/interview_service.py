@@ -15,6 +15,8 @@ def handle_save_qa(phien_id, qa_list):
     for qa in qa_list:
         cau_hoi = qa.get('question')
         tra_loi = qa.get('answer')
+        print("Lưu AI hỏi:", cau_hoi)
+        print("Lưu User trả lời:", tra_loi)
         add_question_answer(phien_id, cau_hoi, None)      # Lưu câu hỏi của AI
         add_question_answer(phien_id, None, tra_loi)
 

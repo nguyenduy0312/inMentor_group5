@@ -1,7 +1,7 @@
 
 from flask import Flask, redirect, render_template, session
 from routes.interview_routes import interview_bp
-from controller.login.login import login_bp
+from Controller.login.login import login_bp
 from routes.static_routes import static_bp
 from services.ai_service import ai_service_bp
 
