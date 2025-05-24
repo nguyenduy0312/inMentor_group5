@@ -1,0 +1,189 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 45px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  height: 30px;
+  margin-right: 12px;
+}
+
+.logo-text {
+  font-size: 35px;
+  font-weight: bold;
+  color: #2b63d9;
+}
+
+.logo-text span {
+  color: #2b63d9;
+}
+
+.nav-links a {
+  margin-left: 24px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px; /* Khoảng cách đều */
+  align-items: center;
+  font-weight: 600;
+}
+.account {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  margin-left: 12px;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  min-width: 150px;
+  z-index: 100;
+}
+
+
+.nav-links a:hover {
+  color: #2b63d9;
+}
+
+/* Dropdown chọn nghề nghiệp */
+.career-select-wrapper {
+  /*max-width: 900px;
+  width: 100%;
+  margin: 20px auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 16px;*/
+}
+
+.career-select-wrapper label {
+  font-weight: 500;
+  color: #333;
+}
+
+#career-select {
+  padding: 10px 16px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  min-width: 220px;
+}
+
+
+/* Chat layout */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+.chat-start {
+  text-align: center;
+  color: #666;
+  font-size: 17px;
+  margin-top: 40px;
+  font-weight: 500;
+}
+
+#loading-text {
+  font-size: 14px;
+  color: #999;
+}
+
+/* Chat message */
+.message {
+  margin-bottom: 14px;
+  line-height: 1.6;
+  padding: 12px 18px;
+  border-radius: 10px;
+  max-width: 75%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #e0f0ff;
+  margin-left: auto;
+  margin-right: 60px;
+}
+
+.ai {
+  align-self: flex-start;
+  background-color: #f2f2f2;
+  color: #333;
+  margin-right: auto;
+  margin-left: 60px;
+}
+
+/* Input form */
+form {
+  display: flex;
+  padding: 12px 24px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 15px;
+  background-color: #2b63d9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}

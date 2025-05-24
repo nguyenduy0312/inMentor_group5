@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>inMentor - Thông Tin Cá Nhân</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f0f4f8;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 24px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        color: #2a63d3;
+        font-weight: bold;
+        font-size: 36px;
+      }
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 30px; /* Khoảng cách đều nhau giữa các mục */
+      }
+      
+      nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .account {
+        position: relative;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
+        margin-top: 5px;
+      }
+      .dropdown a {
+        display: block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #333;
+      }
+      .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+      }
+      .profile-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+      }
+      .info-group {
+        margin: 15px 0;
+      }
+      .info-group label {
+        font-weight: bold;
+      }
+      .info-group input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background-color: #2a63d3;
+        color: white;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #1c4db1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">inMentor</div>
+      <div class="menu">
+        <nav>
+          <a href="/trangchu">Trang chủ</a>
+          <a href="/trangweb">Về chúng tôi</a>
+          <a href="/pvan">Phỏng vấn AI</a>
+          <a href="/dsvieclam">Danh sách việc làm</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="account" onclick="toggleDropdown()">
+          <span style="cursor:pointer;">Tài khoản</span>
+          <div class="dropdown" id="accountDropdown">
+            <a href="{{ url_for('login_bp.profile') }}">Thông tin tài khoản</a>
+            <a href="{{ url_for('login_bp.logout') }}">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>THÔNG TIN</h2>
+
+  {% if user.Picture %}
+    <img src="data:image/jpeg;base64,{{ user.Picture }}" id="avatar" class="profile-img" alt="Ảnh đại diện">
+  {% else %}
+    <img src="https://via.placeholder.com/120" id="avatar" class="profile-img" alt="Ảnh đại diện">
+  {% endif %}
+
+  <input type="file" id="avatarInput" style="display:none;" accept="image/*">
+
+  <div class="info-group">
+    <label>Họ tên</label>
+    <input type="text" id="fullname" value="{{ user.Ho_Ten }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Email</label>
+    <input type="email" id="email" value="{{ user.Email }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Ngày sinh</label>
+    <input type="date" id="dob" value="{{ user.Ngay_Sinh }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Số điện thoại</label>
+    <input type="text" id="phone" value="{{ user.SoDienThoai }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Quốc gia</label>
+    <input type="text" id="country" value="{{ user.QuocGia }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Tỉnh</label>
+    <input type="text" id="province" value="{{ user.Tinh }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Quận/Huyện</label>
+    <input type="text" id="district" value="{{ user.Quan_Huyen }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Kỹ năng</label>
+    <input type="text" id="skills" value="{{ user.skills }}" disabled>
+  </div>
+  <div class="info-group">
+    <label>Mô tả</label>
+    <textarea id="description" disabled>{{ user.MoTa }}</textarea>
+  </div>
+
+  <div class="info-group">
+    <label>File CV:</label>
+    {% if user.CV_File %}
+      <a href="{{ url_for('download_cv', filename=user.CV_File) }}" target="_blank">Xem CV đã tải lên</a>
+    {% else %}
+      <p>Chưa có CV</p>
+    {% endif %}
+  </div>
+
+  <button class="edit-btn" onclick="toggleEdit()">Chỉnh sửa thông tin</button>
+</div>
+
+      <div class="actions">
+        <button onclick="analyzeCV()">Phân tích CV</button>
+        <button onclick="toggleEdit()">Cập nhật</button>
+      </div>
+    </div>
+
+    <script>
+      function toggleEdit() {
+        const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="date"]')
+        const avatarInput = document.getElementById('avatarInput')
+      
+        if (inputs[0].disabled) {
+          // Enable edit mode
+          inputs.forEach((input) => (input.disabled = false))
+          avatarInput.style.display = 'block'
+        } else {
+          // Disable edit mode + gửi dữ liệu lên backend
+          inputs.forEach((input) => (input.disabled = true))
+          avatarInput.style.display = 'none'
+          saveProfile()
+        }
+      }
+      
+      function saveProfile() {
+        const formData = new FormData()
+      
+        const avatarInput = document.getElementById('avatarInput')
+        if (avatarInput.files.length > 0) {
+          formData.append('image', avatarInput.files[0])
+        }
+      
+        formData.append('fullname', document.getElementById('fullname').value)
+        formData.append('email', document.getElementById('email').value)
+        formData.append('dob', document.getElementById('dob').value)
+        formData.append('phone', document.getElementById('phone').value)
+        formData.append('country', document.getElementById('country').value)
+        formData.append('province', document.getElementById('province').value)
+        formData.append('district', document.getElementById('district').value)
+      
+        fetch('http://localhost:5000/api/update-profile', {
+          method: 'POST',
+          body: formData
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data.message)
+            // Nếu có ảnh mới, cập nhật ảnh hiển thị
+            if (avatarInput.files.length > 0) {
+              const reader = new FileReader()
+              reader.onload = (e) => {
+                document.getElementById('avatar').src = e.target.result
+              }
+              reader.readAsDataURL(avatarInput.files[0])
+              avatarInput.value = '' // reset input file sau khi gửi
+            }
+          })
+          .catch((err) => {
+            alert('Lỗi cập nhật profile!')
+            console.error(err)
+          })
+      }
+      
+      function toggleDropdown() {
+        const dropdown = document.getElementById('accountDropdown')
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'
+      }
+      
+      document.getElementById('avatarInput').addEventListener('change', function (event) {
+        const file = event.target.files[0]
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          document.getElementById('avatar').src = e.target.result
+        }
+        reader.readAsDataURL(file)
+      })
+      
+      function analyzeCV() {
+        alert('Đang phân tích CV... (chức năng demo)')
+      }
+      
+      document.addEventListener('click', function (event) {
+        const dropdown = document.getElementById('accountDropdown')
+        if (!event.target.closest('.account')) {
+          dropdown.style.display = 'none'
+        }
+      })
+    </script>
+  </body>
+</html>
+

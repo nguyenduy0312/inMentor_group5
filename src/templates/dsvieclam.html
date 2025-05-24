@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>inMentor - Việc làm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#f6fbff] text-[#222] font-sans">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between max-w-8xl mx-auto px-6 py-6 bg-white shadow-sm">
+    <div class="text-4xl font-bold text-[#1d7ed6] mr-8">inMentor</div>
+    <ul class="flex space-x-6 font-medium text-xl">
+      <li><a href="/trangchu" class="hover:text-[#1d7ed6]">Trang chủ</a></li>
+      <li><a href="/trangweb" class="hover:text-[#1d7ed6]">Về chúng tôi</a></li>
+      <li><a href="/pvan" class="hover:text-[#1d7ed6]">Phỏng vấn AI</a></li>
+      <li><a href="/dsvieclam" class="hover:text-[#1d7ed6]">Danh sách việc làm</a></li>
+      <li><a href="#" class="hover:text-[#1d7ed6]">Feedback</a></li>
+      <li class="relative" id="account-container" style="cursor:pointer;">
+        <span id="account-label" class="hover:text-[#1d7ed6]">Tài khoản</span>
+        <div id="account-dropdown"
+          style="display:none; position:absolute; top:130%; right:0; background:white; border:1px solid #ccc; box-shadow:0 2px 8px rgba(0,0,0,0.1); min-width:160px; z-index:10;">
+          <a href="use.html" class="block px-4 py-2 hover:bg-gray-100">Thông tin tài khoản</a>
+          <a href="trangweb.html" class="block px-4 py-2 hover:bg-gray-100">Đăng xuất</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <div class="text-center mt-10">
+    <h1 class="text-3xl font-bold mb-2">Khám phá cơ hội nghề nghiệp</h1>
+    <p class="text-gray-500">Tìm kiếm công việc phù hợp với kỹ năng và mong muốn của bạn</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap justify-center gap-4 px-6 mt-8">
+    <select id="locationFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả địa điểm</option>
+    </select>
+    <select id="industryFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả ngành nghề</option>
+    </select>
+    <select id="salaryFilter" class="w-60 p-3 rounded-lg border border-gray-300">
+      <option value="">Tất cả mức lương</option>
+      <option value="15000000">15 triệu trở lên</option>
+      <option value="20000000">20 triệu trở lên</option>
+      <option value="25000000">25 triệu trở lên</option>
+    </select>
+  </div>
+
+  <!-- Job Cards -->
+  <div id="jobList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-10">
+    <!-- Các thẻ việc làm sẽ được thêm bằng JS -->
+  </div>
+
+  <script>
+    const jobs = [
+      { id: 1, title: "AI Engineer", salary: "15,000,000 - 20,000,000 VNĐ", company: "Công ty Công nghệ thông tin CKL", location: "Tuyên Quang", industry: "AI" },
+      { id: 2, title: "Data Engineer", salary: "25,000,000 - 30,000,000 VNĐ", company: "Công ty Công nghệ thông tin NDD", location: "Hưng Yên", industry: "Data" },
+      { id: 3, title: "Data Analyst", salary: "20,000,000 VNĐ", company: "Công ty Công nghệ thông tin HTH", location: "Nghệ An", industry: "Data" },
+      { id: 4, title: "BE Development", salary: "20,000,000 VNĐ", company: "Công ty Công nghệ thông tin FPT", location: "Hà Nội", industry: "Backend" },
+      { id: 5, title: "Web FE Development", salary: "20,000,000 - 30,000,000 VNĐ", company: "Công ty Công nghệ thông tin Viettel", location: "Hà Nội", industry: "Frontend" },
+      { id: 6, title: "FullStack", salary: "25,000,000 VNĐ", company: "Công ty Công nghệ thông tin CMC", location: "Hà Nội", industry: "Fullstack" },
+    ];
+
+    const jobList = document.getElementById("jobList");
+    const locationFilter = document.getElementById("locationFilter");
+    const industryFilter = document.getElementById("industryFilter");
+    const salaryFilter = document.getElementById("salaryFilter");
+
+    function renderJobs(filteredJobs) {
+      jobList.innerHTML = "";
+      filteredJobs.forEach((job) => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-6 rounded-xl shadow-md flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 hover:bg-gray-50 transition transform duration-300";
+        card.innerHTML = `
+          <h2 class="text-[#1d7ed6] font-semibold text-lg mb-1">${job.title}</h2>
+          <p class="text-sm text-[#1d7ed6] font-medium mb-2">${job.salary}</p>
+          <p class="text-sm text-gray-700 flex items-center gap-1 mb-1"><i class="ri-building-line"></i>${job.company}</p>
+          <p class="text-sm text-gray-700 flex items-center gap-1 mb-4"><i class="ri-map-pin-line"></i>${job.location}</p>
+          <div class="flex gap-2">
+            <button class="details-btn bg-[#1d7ed6] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#1666c1] hover:shadow-lg transition duration-300 ease-in-out" data-id="${job.id}">Chi tiết</button>
+            <button class="interview-btn bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700 hover:shadow-lg transition duration-300 ease-in-out">Phỏng vấn ảo</button>
+          </div>
+        `;
+        jobList.appendChild(card);
+      });
+
+      // Gắn sự kiện sau khi tạo thẻ
+      document.querySelectorAll(".details-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const id = e.target.getAttribute("data-id");
+          window.location.href = `jobdetail.html?id=${id}`;
+        });
+      });
+
+      document.querySelectorAll(".interview-btn").forEach(btn => {
+        btn.addEventListener("click", handleInterviewClick);
+      });
+    }
+
+    function populateFilters() {
+      const locations = [...new Set(jobs.map((job) => job.location))];
+      const industries = [...new Set(jobs.map((job) => job.industry))];
+
+      locations.forEach((location) => {
+        const option = document.createElement("option");
+        option.value = location;
+        option.textContent = location;
+        locationFilter.appendChild(option);
+      });
+
+      industries.forEach((industry) => {
+        const option = document.createElement("option");
+        option.value = industry;
+        option.textContent = industry;
+        industryFilter.appendChild(option);
+      });
+    }
+
+    function getMinSalary(salaryStr) {
+      const match = salaryStr.match(/[\d,]+/g);
+      if (!match || match.length === 0) return 0;
+      const minStr = match[0].replace(/,/g, '');
+      return parseInt(minStr, 10);
+    }
+
+    function filterJobs() {
+      const locationValue = locationFilter.value;
+      const industryValue = industryFilter.value;
+      const salaryValue = salaryFilter.value;
+
+      const filtered = jobs.filter((job) => {
+        const minSalary = getMinSalary(job.salary);
+        const salaryOk = salaryValue === "" || minSalary >= Number(salaryValue);
+        return (
+          (locationValue === "" || job.location === locationValue) &&
+          (industryValue === "" || job.industry === industryValue) &&
+          salaryOk
+        );
+      });
+
+      renderJobs(filtered);
+    }
+
+    locationFilter.addEventListener("change", filterJobs);
+    industryFilter.addEventListener("change", filterJobs);
+    salaryFilter.addEventListener("change", filterJobs);
+
+    // Đăng nhập
+    function isLoggedIn() {
+      return localStorage.getItem('username') !== null;
+    }
+
+    const accountContainer = document.getElementById('account-container');
+    const accountDropdown = document.getElementById('account-dropdown');
+
+    accountContainer.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (isLoggedIn()) {
+        accountDropdown.style.display = accountDropdown.style.display === 'block' ? 'none' : 'block';
+      } else {
+        window.location.href = '/login';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!accountContainer.contains(e.target)) {
+        accountDropdown.style.display = 'none';
+      }
+    });
+
+    function handleInterviewClick() {
+      if (isLoggedIn()) {
+        window.location.href = '/chatbot';
+      } else {
+        alert('Vui lòng đăng nhập để sử dụng chức năng phỏng vấn ảo.');
+        window.location.href = '/login';
+      }
+    }
+
+    // Khởi tạo ban đầu
+    populateFilters();
+    renderJobs(jobs);
+  </script>
+</body>
+</html>

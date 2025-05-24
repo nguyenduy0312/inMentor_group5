@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 360px;
+      transition: 0.3s;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 1em;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 0.3em;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.9em;
+      border: none;
+      background: #217093;
+      color: white;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5em;
+    }
+
+    .btn:hover {
+      background: #195f7c;
+    }
+
+    .toggle {
+      margin-top: 1em;
+      text-align: center;
+      color: #666;
+    }
+
+    .toggle a {
+      color: #217093;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .flash-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 1em;
+      border-radius: 5px;
+      margin-bottom: 1em;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-message">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form method="POST" action="/login" id="loginForm">
+      <h2>Đăng nhập</h2>
+      <div class="input-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" name="email" id="loginEmail" required />
+      </div>
+      <div class="input-group">
+        <label for="loginPassword">Mật khẩu</label>
+        <input type="password" name="password" id="loginPassword" required />
+      </div>
+      <button class="btn" type="submit">Đăng nhập</button>
+      <div class="toggle">
+        Chưa có tài khoản? <a href="/signup">Đăng ký</a>
+      </div>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form method="POST" action="/signup" class="hidden" id="signupForm">
+      <h2>Đăng ký</h2>
+      <div class="input-group">
+        <label for="signupName">Họ tên</label>
+        <input type="text" name="name" id="signupName" required />
+      </div>
+      <div class="input-group">
+        <label for="signupEmail">Email</label>
+        <input type="email" name="email" id="signupEmail" required />
+      </div>
+      <div class="input-group">
+        <label for="signupPassword">Mật khẩu</label>
+        <input type="password" name="password" id="signupPassword" required />
+      </div>
+      <div class="input-group">
+        <label for="confirmPassword">Xác nhận mật khẩu</label>
+        <input type="password" id="confirmPassword" required />
+      </div>
+      <button class="btn" type="submit">Đăng ký</button>
+      <div class="toggle">
+        Đã có tài khoản? <a href="/login">Đăng nhập</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const signupForm = document.getElementById("signupForm");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const signupPassword = document.getElementById("signupPassword");
+
+    signupForm.addEventListener("submit", (e) => {
+      if (confirmPassword.value !== signupPassword.value) {
+        e.preventDefault();
+        alert("Mật khẩu không khớp!");
+      }
+    });
+  </script>
+</body>
+</html>
