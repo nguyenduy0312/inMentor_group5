@@ -1,7 +1,7 @@
 
 from flask import Flask, redirect, render_template, session
 from routes.interview_routes import interview_bp
-from Controller.login.login import login_bp
+from controller.login.login import login_bp
 from routes.static_routes import static_bp
 from services.ai_service import ai_service_bp
 
@@ -29,7 +29,7 @@ app.register_blueprint(login_bp)
 app.register_blueprint(static_bp)
 app.register_blueprint(ai_service_bp, url_prefix="/api")
 
-@app.route('/')
+@app.route('/trangchu')
 def index():
     return redirect('/trangchu')
 
